@@ -1,0 +1,1 @@
+const e=require("mammoth"),t=require("fs");e.extractRawText({path:"Four Alpha Yellow Belt Body of Knowledge (1).docx"}).then(function(e){var o=e.value;t.writeFileSync("extracted_yb.txt",o),console.log("Extraction complete.")}).catch(function(e){console.log(e)});

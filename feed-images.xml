@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.fouralpha.org/</loc>
+    <image:image>
+      <image:loc>https://www.fouralpha.org/logo.jpeg</image:loc>
+      <image:title>Four Alpha AED Lab Logo</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.fouralpha.org/assets/alien.png</image:loc>
+      <image:title>Alien Concept</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.fouralpha.org/assets/human.png</image:loc>
+      <image:title>Human Concept</image:title>
+    </image:image>
+  </url>
+</urlset>

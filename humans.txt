@@ -1,0 +1,18 @@
+/* TEAM */
+Developer: Mitanshu Bhasin
+Contact: 8076108584
+Twitter: @mitanshu_bhasin
+Location: India
+
+/* SITE */
+Last update: 2026/02/23
+Standards: HTML5, CSS3, JavaScript
+Components: Tailwind CSS, Font Awesome, Google Fonts
+Backend: Firebase Authentication & Hosting
+
+/* QUOTE */
+"The geometry of life is defined by the equilibrium we choose to maintain."
+
+/* MISSION */
+Four Alpha AED Lab: Decoding the mathematics of human potential 
+through the Dwivedi-Nash Cooperative Equilibrium.

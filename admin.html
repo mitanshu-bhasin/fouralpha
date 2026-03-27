@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="en">
+  <head>
+<script>
+    if (localStorage.getItem("fourAlphaUser")) {
+        try {
+            const userObj = JSON.parse(localStorage.getItem("fourAlphaUser"));
+            if (userObj && userObj.email !== "info@fouralpha.org") {
+                // If not admin, they are kept waiting and auth.js re-redirects or denies access.
+            } else if (userObj && userObj.email === "info@fouralpha.org") {
+                // Pre-unhide to avoid delay flash
+                document.addEventListener('DOMContentLoaded', () => {
+                    const c = document.getElementById("access-denied");
+                    const p = document.getElementById("admin-panel");
+                    const u = document.getElementById("auth-status");
+                    if(c && p && u) {
+                        c.classList.add("hidden");
+                        p.classList.remove("hidden");
+                        u.innerHTML = `<span class="text-green-500"><i class="fas fa-signal"></i> CACHED CONNECTION</span> | ${userObj.email}`;
+                    }
+                });
+            }
+        } catch(e) {}
+    }
+</script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-YTPPTC2C5Q"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-YTPPTC2C5Q");
+    </script>
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title data-cms-id="admin-seo-title">Admin | Four Alpha AED Lab</title>
+    <script src="script.min.js" defer="defer"></script>
+    <link rel="stylesheet" href="tailwind-output.min.css" />
+    <link rel="stylesheet" href="styles.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap&family=Montserrat:wght@400;600;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="canonical" href="https://www.fouralpha.org/admin.html" />
+    <meta
+      name="description"
+      content="Explore Admin at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium."
+      data-cms-id="admin-seo-desc"
+    />
+    <meta
+      name="keywords"
+      content="Four Alpha, foundational frameworks, human trajectory, strategic implications, equilibrium"
+    />
+    <meta property="og:title" content="Admin | Four Alpha AED Lab" />
+    <meta
+      property="og:description"
+      content="Explore Admin at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.fouralpha.org/admin.html" />
+    <meta
+      property="og:image"
+      content="https://www.fouralpha.org/og-image.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Admin | Four Alpha AED Lab" />
+    <meta
+      name="twitter:description"
+      content="Explore Admin at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.fouralpha.org/og-image.png"
+    />
+    <link
+      rel="search"
+      type="application/opensearchdescription+xml"
+      href="https://www.fouralpha.org/opensearch.xml"
+      title="Four Alpha Search"
+    />
+    <meta
+      name="msapplication-config"
+      content="https://www.fouralpha.org/browserconfig.xml"
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Admin | Four Alpha AED Lab",
+        "description": "Explore Admin at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium.",
+        "url": "https://www.fouralpha.org/admin.html",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Admin | Four Alpha AED Lab",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.fouralpha.org/admin.html"
+          }
+        }
+      }
+    </script>
+  </head>
+
+  <body
+    class="bg-cosmic-dark text-white font-sans antialiased overflow-x-hidden selection:bg-gold selection:text-black"
+  >
+    <nav
+      class="fixed top-0 w-full z-50 bg-cosmic-dark/90 backdrop-blur-md border-b border-white/10 transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:pl-2 lg:pr-8">
+        <div class="flex justify-between items-center h-20">
+          <div
+            class="flex-shrink-0 flex items-center gap-3 cursor-pointer lg:-ml-6"
+            onclick="window.location.href = 'index.html'"
+          >
+            <div
+              class="w-10 h-10 rounded-full border-2 border-gold flex items-center justify-center text-gold shadow-[0_0_10px_rgba(255,184,0,0.5)]"
+            >
+              <i class="fas fa-compass"></i>
+            </div>
+            <span class="font-black text-xl tracking-widest text-white"
+              >FOUR <span class="text-gold">ALPHA</span></span
+            >
+          </div>
+          <div
+            class="hidden md:flex items-center space-x-4 lg:space-x-6 text-sm font-semibold tracking-wide"
+          >
+            <div class="relative group py-6">
+              <button
+                class="hover:text-gold transition-colors flex items-center gap-1"
+              >
+                THE FOUNDATION <i class="fas fa-chevron-down text-xs"></i>
+              </button>
+              <div
+                class="absolute left-0 mt-4 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden"
+              >
+                <a
+                  href="four-alpha-model.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >The Four Alpha Model</a
+                >
+                <a
+                  href="gross-vs-subtle.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >Gross vs. Subtle Dynamics</a
+                >
+                <a
+                  href="four-alpha-model.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >The Rule of Sequence</a
+                >
+                <a
+                  href="math-of-life.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold"
+                  >Mathematics of Life (N* & FTOPs)</a
+                >
+              </div>
+            </div>
+            <div class="relative group py-6">
+              <button
+                class="hover:text-gold transition-colors flex items-center gap-1"
+              >
+                APPLICATION SPHERES <i class="fas fa-chevron-down text-xs"></i>
+              </button>
+              <div
+                class="absolute left-0 mt-4 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden"
+              >
+                <a
+                  href="alpha-self.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >&alpha; for the Self</a
+                >
+                <a
+                  href="alpha-family.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >&alpha; for the Family</a
+                >
+                <a
+                  href="alpha-org.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >&alpha; for Organizations</a
+                >
+                <a
+                  href="alpha-nation.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >&alpha; for the Nation</a
+                >
+                <a
+                  href="alpha-globe.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold"
+                  >&alpha; for the Globe</a
+                >
+              </div>
+            </div>
+            <div class="relative group py-6">
+              <button
+                class="hover:text-gold transition-colors flex items-center gap-1"
+              >
+                METHODOLOGY <i class="fas fa-chevron-down text-xs"></i>
+              </button>
+              <div
+                class="absolute left-0 mt-4 w-60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden"
+              >
+                <a
+                  href="alpha-toolkit.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >The Alpha Toolkit</a
+                >
+                <a
+                  href="dmaic-life.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >DMAIC for Life</a
+                >
+                <a
+                  href="capa-rca.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >CAPA & RCA</a
+                >
+                <a
+                  href="research-validation.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold"
+                  >Research & Validation (RCTs)</a
+                >
+              </div>
+            </div>
+            <div class="relative group py-6">
+              <button
+                class="hover:text-gold transition-colors flex items-center gap-1"
+              >
+                CERTIFICATION <i class="fas fa-chevron-down text-xs"></i>
+              </button>
+              <div
+                class="absolute left-0 mt-4 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden"
+              >
+                <a
+                  href="champions.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  ><i class="fas fa-crown text-slate-300 mr-2"></i>Champions</a
+                >
+                <a
+                  href="white-belt/index.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >White Belt (Awareness)</a
+                >
+                <a
+                  href="yellow-belt/index.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >Yellow Belt (Foundational)</a
+                >
+                <a
+                  href="green-belt/index.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >Green Belt (Advanced)</a
+                >
+                <a
+                  href="black-belt/index.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"
+                  >Black Belt (Complex Systems)</a
+                >
+                <a
+                  href="masters.html"
+                  class="block px-4 py-3 hover:bg-white/5 hover:text-gold"
+                  >Master Black Belt & Champions</a
+                >
+              </div>
+            </div>
+            <div class="relative group py-6">
+              <button
+                class="hover:text-gold transition-colors flex items-center gap-1 uppercase tracking-wide"
+              >
+                Policy & Governance <i class="fas fa-chevron-down text-xs"></i>
+              </button>
+              <div
+                class="absolute left-0 mt-4 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden py-4"
+              >
+                <div class="px-4 pb-2 border-b border-white/5 mb-2">
+                  <a
+                    href="education-policy/global/index.html"
+                    class="block font-bold text-gold hover:text-white transition-colors mb-1"
+                    >GLOBAL POLICY</a
+                  >
+                  <div class="pl-2 space-y-1">
+                    <a
+                      href="education-policy/global/saarc/india.html"
+                      class="block text-[11px] text-gray-400 hover:text-gold uppercase"
+                      >SAARC Nations</a
+                    >
+                    <a
+                      href="education-policy/global/brics/india.html"
+                      class="block text-[11px] text-gray-400 hover:text-gold uppercase"
+                      >BRICS</a
+                    >
+                  </div>
+                </div>
+                <div class="px-4 pt-2">
+                  <a
+                    href="education-policy/national/index.html"
+                    class="block font-bold text-gold hover:text-white transition-colors mb-1"
+                    >NATIONAL POLICY</a
+                  >
+                  <div class="pl-2 grid grid-cols-2 gap-x-2 gap-y-1 mt-2">
+                    <a
+                      href="education-policy/national/nep-1968.html"
+                      class="block text-[10px] text-gray-400 hover:text-gold"
+                      >NEP 1968</a
+                    >
+                    <a
+                      href="education-policy/national/nep-1986.html"
+                      class="block text-[10px] text-gray-400 hover:text-gold"
+                      >NEP 1986</a
+                    >
+                    <a
+                      href="education-policy/national/nep-2020.html"
+                      class="block text-[10px] text-gray-400 hover:text-gold"
+                      >NEP 2020</a
+                    >
+                    <a
+                      href="education-policy/national/nep-2030.html"
+                      class="block text-[10px] text-gray-400 hover:text-gold"
+                      >NEP 2030</a
+                    >
+                    <a
+                      href="education-policy/national/nep-2040.html"
+                      class="block text-[10px] text-gray-400 hover:text-gold"
+                      >NEP 2040</a
+                    >
+                    <a
+                      href="education-policy/national/nep-2050.html"
+                      class="block text-[10px] text-gray-400 hover:text-gold"
+                      >NEP 2050</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="auth-status"
+              class="text-xs font-black tracking-widest uppercase text-gray-400 ml-4"
+            >
+              Checking Auth...
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div id="google_translate_element" class="flex items-center"></div>
+            <div class="md:hidden flex items-center">
+              <button
+                id="mobile-menu-button"
+                aria-label="Open Navigation Menu"
+                aria-expanded="false"
+                class="text-gold hover:text-white text-2xl focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-cosmic-dark transition-all duration-300 rounded"
+              >
+                <i class="fas fa-bars"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div
+      id="mobile-menu"
+      class="fixed inset-y-0 right-0 w-80 z-[100] transform translate-x-full transition-transform duration-300 ease-in-out hidden flex flex-col shadow-2xl overflow-y-auto border-l border-white/10"
+    >
+      <div
+        class="flex justify-between items-center p-6 border-b border-white/5 bg-white/5"
+      >
+        <span class="font-black text-lg tracking-widest text-white">MENU</span>
+        <button
+          onclick="document.getElementById('mobile-menu-button').click()"
+          class="text-gold hover:text-white transition-colors"
+        >
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      <div class="px-6 pb-20 space-y-2 flex-grow mt-4">
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-drop-1', this)"
+            class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5"
+          >
+            The Foundation
+            <i
+              class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"
+            ></i>
+          </button>
+          <div
+            id="mobile-drop-1"
+            class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"
+          >
+            <a
+              href="four-alpha-model.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >The Four Alpha Model</a
+            >
+            <a
+              href="gross-vs-subtle.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Gross vs. Subtle Dynamics</a
+            >
+            <a
+              href="four-alpha-model.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >The Rule of Sequence</a
+            >
+            <a
+              href="math-of-life.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Mathematics of Life (N* & FTOPs)</a
+            >
+          </div>
+        </div>
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-drop-2', this)"
+            class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5"
+          >
+            Application Spheres
+            <i
+              class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"
+            ></i>
+          </button>
+          <div
+            id="mobile-drop-2"
+            class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"
+          >
+            <a
+              href="alpha-self.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >α for the Self</a
+            >
+            <a
+              href="alpha-family.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >α for the Family</a
+            >
+            <a
+              href="alpha-org.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >α for Organizations</a
+            >
+            <a
+              href="alpha-nation.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >α for the Nation</a
+            >
+            <a
+              href="alpha-globe.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >α for the Globe</a
+            >
+          </div>
+        </div>
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-drop-3', this)"
+            class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5"
+          >
+            Methodology
+            <i
+              class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"
+            ></i>
+          </button>
+          <div
+            id="mobile-drop-3"
+            class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"
+          >
+            <a
+              href="alpha-toolkit.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >The Alpha Toolkit</a
+            >
+            <a
+              href="dmaic-life.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >DMAIC for Life</a
+            >
+            <a
+              href="capa-rca.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >CAPA & RCA</a
+            >
+            <a
+              href="research-validation.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Research & Validation (RCTs)</a
+            >
+          </div>
+        </div>
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-drop-4', this)"
+            class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5"
+          >
+            Certification
+            <i
+              class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"
+            ></i>
+          </button>
+          <div
+            id="mobile-drop-4"
+            class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"
+          >
+            <a
+              href="champions.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              ><i class="fas fa-crown text-slate-300 mr-2 text-xs"></i
+              >Champions</a
+            >
+            <a
+              href="white-belt/index.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >White Belt (Awareness)</a
+            >
+            <a
+              href="yellow-belt/index.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Yellow Belt (Foundational)</a
+            >
+            <a
+              href="green-belt/index.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Green Belt (Advanced)</a
+            >
+            <a
+              href="black-belt/index.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Black Belt (Complex Systems)</a
+            >
+            <a
+              href="masters.html"
+              class="block py-2 text-sm text-gray-300 hover:text-gold"
+              >Master Black Belt & Champions</a
+            >
+          </div>
+        </div>
+        <div>
+          <button
+            onclick="toggleMobileDropdown('mobile-drop-edu', this)"
+            class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5"
+          >
+            Policy & Governance
+            <i
+              class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"
+            ></i>
+          </button>
+          <div
+            id="mobile-drop-edu"
+            class="hidden pl-4 py-2 space-y-4 bg-white/5 rounded-b-lg"
+          >
+            <div>
+              <a
+                href="education-policy/global/index.html"
+                class="block py-1 text-xs font-bold text-gold uppercase"
+                >Global Education Policy</a
+              >
+              <div class="pl-4 mt-1 space-y-1">
+                <a
+                  href="education-policy/global/saarc/india.html"
+                  class="block py-1 text-[11px] text-gray-400 hover:text-gold uppercase"
+                  >SAARC Nations</a
+                >
+                <a
+                  href="education-policy/global/brics/india.html"
+                  class="block py-1 text-[11px] text-gray-400 hover:text-gold uppercase"
+                  >BRICS</a
+                >
+              </div>
+            </div>
+            <div>
+              <a
+                href="education-policy/national/index.html"
+                class="block py-1 text-xs font-bold text-gold uppercase"
+                >National Education Policy</a
+              >
+              <div class="pl-4 mt-1 grid grid-cols-1 gap-2">
+                <a
+                  href="education-policy/national/nep-1968.html"
+                  class="block py-1 text-[11px] text-gray-400"
+                  >NEP 1968</a
+                >
+                <a
+                  href="education-policy/national/nep-1986.html"
+                  class="block py-1 text-[11px] text-gray-400"
+                  >NEP 1986</a
+                >
+                <a
+                  href="education-policy/national/nep-2020.html"
+                  class="block py-1 text-[11px] text-gray-400"
+                  >NEP 2020</a
+                >
+                <a
+                  href="education-policy/national/nep-2030.html"
+                  class="block py-1 text-[11px] text-gray-400"
+                  >NEP 2030</a
+                >
+                <a
+                  href="education-policy/national/nep-2040.html"
+                  class="block py-1 text-[11px] text-gray-400"
+                  >NEP 2040</a
+                >
+                <a
+                  href="education-policy/national/nep-2050.html"
+                  class="block py-1 text-[11px] text-gray-400"
+                  >NEP 2050</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-6 px-2">
+          <div id="google_translate_element_mobile" class="mb-4"></div>
+          <div
+            id="auth-status-mobile"
+            class="text-xs font-black tracking-widest uppercase text-gray-400 mb-4 text-center"
+          ></div>
+          <a
+            href="index.html"
+            class="block w-full text-center bg-gold text-cosmic-dark px-6 py-4 rounded-sm font-bold hover:bg-yellow-400 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-cosmic-dark transition-all shadow-lg uppercase tracking-widest text-xs"
+            >RETURN TO BASELINE</a
+          >
+        </div>
+      </div>
+    </div>
+    <section
+      class="cosmic-bg min-h-screen pt-24 pb-12 flex flex-col items-center relative p-4"
+    >
+      <div
+        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"
+      ></div>
+      <div
+        id="access-denied"
+        class="hidden glass-box p-12 rounded-2xl max-w-lg text-center shadow-[0_0_30px_rgba(255,184,0,0.1)] relative z-10 w-full border border-red-500/20 mt-10"
+      >
+        <div
+          class="w-20 h-20 mx-auto rounded-full border-2 border-red-500 flex items-center justify-center text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] mb-8 bg-cosmic-dark"
+        >
+          <i class="fas fa-lock text-3xl"></i>
+        </div>
+        <h1
+          class="text-3xl font-black tracking-widest text-white mb-4 uppercase"
+        >
+          Access Denied
+        </h1>
+        <p class="font-serif text-gray-400 text-sm leading-relaxed mb-8">
+          You do not have the required clearance to access the Content
+          Management Node.
+        </p>
+        <a
+          href="login.html"
+          class="block w-full bg-white/10 text-white py-3 rounded-sm font-bold text-sm hover:bg-white/20 transition-colors uppercase tracking-widest"
+          >Return to Login</a
+        >
+      </div>
+      <div
+        id="admin-panel"
+        class="hidden glass-box p-8 md:p-12 rounded-2xl max-w-4xl text-left shadow-[0_0_30px_rgba(255,184,0,0.1)] relative z-10 w-full border border-gold/20 mt-10"
+      >
+        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+          <div
+            class="w-12 h-12 rounded-full border-2 border-gold flex items-center justify-center text-gold shadow-[0_0_15px_rgba(255,184,0,0.3)] bg-cosmic-dark"
+          >
+            <i class="fas fa-satellite-dish text-xl"></i>
+          </div>
+          <div>
+            <h1
+              class="text-3xl font-black tracking-widest text-white uppercase"
+            >
+              CMS Terminal
+            </h1>
+            <p
+              class="text-gold text-xs font-black tracking-widest uppercase mt-1"
+            >
+              Live Sub-routine Deployment
+            </p>
+          </div>
+        </div>
+        <div
+          id="toast"
+          class="hidden mb-6 bg-green-500/10 border border-green-500/50 text-green-400 px-4 py-3 rounded-md text-sm font-bold tracking-widest uppercase flex items-center gap-2"
+        >
+          <i class="fas fa-check-circle"></i>
+          <span>Content Saved Successfully</span>
+        </div>
+        <button
+          id="cms-sidebar-toggle"
+          class="md:hidden w-full flex justify-between items-center bg-white/5 border border-white/10 px-4 py-3 rounded-lg text-gold font-bold text-sm tracking-widest uppercase mb-4 hover:bg-white/10 transition-all"
+          onclick="
+            document.getElementById('cms-sidebar').classList.toggle('hidden');
+            this.querySelector('i').classList.toggle('fa-chevron-down');
+            this.querySelector('i').classList.toggle('fa-chevron-up');
+          "
+        >
+          <span><i class="fas fa-bars mr-2"></i>CMS Navigation</span>
+          <i class="fas fa-chevron-down text-xs"></i>
+        </button>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div
+            id="cms-sidebar"
+            class="hidden md:block md:col-span-1 border-r border-white/10 pr-6 space-y-2"
+          >
+            <h2
+              class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-4 text-gold"
+            >
+              System Management
+            </h2>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all flex justify-between items-center"
+              data-target="users"
+            >
+              Users & Certs <i class="fas fa-users text-xs"></i></button
+            ><button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all flex justify-between items-center mt-2"
+              data-target="queries"
+            >
+              Inquiries <i class="fas fa-envelope text-xs"></i></button
+            ><button
+              id="main_toggle"
+              class="block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-red-500/20 hover:text-red-400 font-semibold text-sm transition-all flex justify-between items-center mt-2"
+            >
+              Maintenance Mode <i class="fas fa-power-off text-xs"></i>
+            </button>
+            <h2
+              class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 mt-6"
+            >
+              Select Node
+            </h2>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-gold/10 text-gold border border-gold font-semibold text-sm transition-all"
+              data-target="home"
+            >
+              Home (index)
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="about-deepak"
+            >
+              About
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="policy-governance">
+              <span>Policy & Governance</span>
+            </button>
+          </li>
+          <li>
+            <button class="cms-tab-btn flex items-center justify-between space-x-2 w-full text-left bg-white/5 border-transparent text-gray-400 hover:text-white px-4 py-2 rounded transition-colors focus:outline-none" data-target="updates-mgmt"
+            >
+              Policy & Governance
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="contact"
+            >
+              Contact
+            </button>
+            <h2
+              class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 mt-6"
+            >
+              Core Pages
+            </h2>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="four-alpha-model"
+            >
+              Four Alpha Model
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="math-of-life"
+            >
+              Math of Life
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="alpha-self"
+            >
+              Alpha Self
+            </button>
+            <h2
+              class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 mt-6"
+            >
+              Certifications
+            </h2>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="champions"
+            >
+              Champions
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="white-belt"
+            >
+              White Belt
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="yellow-belt"
+            >
+              Yellow Belt
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="green-belt"
+            >
+              Green Belt
+            </button>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="black-belt"
+            >
+              Black Belt
+            </button>
+            <h2
+              class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 mt-6"
+            >
+              System
+            </h2>
+            <button
+              class="cms-tab-btn block w-full text-left px-4 py-3 rounded-lg bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-white font-semibold text-sm transition-all"
+              data-target="global"
+            >
+              Global (Footer)
+            </button>
+          </div>
+          <div class="md:col-span-3">
+            <div id="cms-editor-container">
+              <form id="cms-form" class="space-y-6">
+                <div id="fields-container" class="space-y-6">
+                  <div
+                    class="text-center text-gray-400 py-10 font-serif italic text-sm"
+                  >
+                    Loading variables for selected node...
+                  </div>
+                </div>
+                <div class="pt-6 border-t border-white/10 flex justify-end">
+                  <button
+                    type="submit"
+                    id="save-btn"
+                    class="bg-gold text-cosmic-dark px-8 py-3 rounded-sm font-black text-sm hover:bg-white hover:text-white transition-all shadow-[0_0_15px_rgba(255,184,0,0.4)] uppercase tracking-widest flex items-center gap-2"
+                  >
+                    Deploy Changes <i class="fas fa-upload"></i>
+                  </button>
+                </div>
+              </form>
+            
+        <!-- Updates Management Container -->
+        <div id="updates-mgmt-container" class="hidden">
+            <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+              <h2 class="text-xl font-black text-white uppercase tracking-wider">Dispatches & Updates</h2>
+              <button onclick="window.openUpdateModal()" class="bg-gold/10 text-gold border border-gold/30 px-6 py-2 rounded-md font-bold text-xs hover:bg-gold hover:text-cosmic-dark transition-all uppercase tracking-widest"><i class="fas fa-plus mr-2"></i> New Update</button>
+            </div>
+            <div id="updates-list" class="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2">
+                <!-- Updates rendered here -->
+            </div>
+        </div>
+</div>
+            <div id="users-container" class="hidden">
+              <div
+                class="flex justify-between items-center mb-6 border-b border-white/10 pb-4"
+              >
+                <h2
+                  class="text-xl font-black tracking-widest text-white uppercase"
+                >
+                  <i class="fas fa-users-cog text-gold mr-3"></i> User Directory
+                </h2>
+                <button
+                  id="refresh-users-btn"
+                  class="text-gray-400 hover:text-gold transition-colors text-sm uppercase tracking-widest font-bold"
+                >
+                  <i class="fas fa-sync-alt mr-1"></i> Refresh
+                </button>
+              </div>
+              <div
+                class="overflow-x-auto rounded-lg border border-white/10 bg-white/[0.02]"
+              >
+                <table class="w-full text-left text-sm text-gray-300">
+                  <thead
+                    class="text-xs font-black uppercase tracking-widest bg-white/5 text-gray-400 border-b border-white/10"
+                  >
+                    <tr>
+                      <th scope="col" class="px-6 py-4">User</th>
+                      <th scope="col" class="px-6 py-4 text-center">
+                        Belts/Certs Earned
+                      </th>
+                      <th scope="col" class="px-6 py-4 text-center">Status</th>
+                      <th scope="col" class="px-6 py-4 text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="users-table-body"
+                    class="divide-y divide-white/5 font-sans text-sm"
+                  >
+                    <tr>
+                      <td
+                        colspan="4"
+                        class="px-6 py-8 text-center text-gray-400 italic"
+                      >
+                        Initializing user data feed...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div id="queries-container" class="hidden">
+              <div
+                class="flex justify-between items-center mb-6 border-b border-white/10 pb-4"
+              >
+                <h2
+                  class="text-xl font-black tracking-widest text-white uppercase"
+                >
+                  <i class="fas fa-envelope-open-text text-gold mr-3"></i>
+                  Support Inquiries
+                </h2>
+                <button
+                  id="refresh-queries-btn"
+                  class="text-gray-400 hover:text-gold transition-colors text-sm uppercase tracking-widest font-bold"
+                >
+                  <i class="fas fa-sync-alt mr-1"></i> Refresh
+                </button>
+              </div>
+              <div class="space-y-4" id="queries-list">
+                <div class="text-center text-gray-400 italic py-8">
+                  Initializing transmission logs...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script type="module" src="admin-cms.min.js"></script>
+    <script src="chatbot.min.js"></script>
+  
+        <!-- Updates Form Modal -->
+        <div id="update-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+          <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="window.closeUpdateModal()"></div>
+          <div class="bg-cosmic-dark border border-white/10 p-6 md:p-8 rounded-2xl w-full max-w-3xl relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-xl font-black text-white uppercase tracking-wider">Update Editor</h3>
+              <button onclick="window.closeUpdateModal()" class="text-gray-400 hover:text-gold transition-colors"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form id="update-form" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Title</label>
+                  <input type="text" id="up-title" required class="w-full bg-white/5 border border-white/20 rounded p-2 text-white font-serif focus:border-gold outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Slug (URL)</label>
+                  <input type="text" id="up-slug" placeholder="auto-generated if empty" class="w-full bg-white/5 border border-white/20 rounded p-2 text-white font-serif focus:border-gold outline-none text-sm">
+                </div>
+                <div>
+                  <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Date</label>
+                  <input type="date" id="up-date" required class="w-full bg-white/5 border border-white/20 rounded p-2 text-white font-serif focus:border-gold outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Status</label>
+                  <label class="flex items-center gap-2 mt-2 cursor-pointer">
+                    <input type="checkbox" id="up-published" class="w-4 h-4 accent-gold" checked>
+                    <span class="text-sm font-bold text-white uppercase">Published</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Thumbnail URL</label>
+                <input type="url" id="up-thumb" class="w-full bg-white/5 border border-white/20 rounded p-2 text-white font-serif focus:border-gold outline-none" placeholder="https://...">
+              </div>
+              <div>
+                <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Excerpt (Short Summary)</label>
+                <textarea id="up-excerpt" rows="2" class="w-full bg-white/5 border border-white/20 rounded p-2 text-white font-serif focus:border-gold outline-none"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-black tracking-widest text-gold uppercase mb-1">Content (HTML allowed)</label>
+                <textarea id="up-content" rows="6" class="w-full bg-white/5 border border-white/20 rounded p-2 text-white font-serif focus:border-gold outline-none"></textarea>
+              </div>
+              <div class="pt-4 text-right border-t border-white/10">
+                <button type="button" onclick="window.closeUpdateModal()" class="mr-4 text-gray-400 hover:text-white uppercase text-xs font-bold tracking-widest px-4 py-2">Cancel</button>
+                <button type="submit" id="up-save-btn" class="bg-gold text-cosmic-dark font-black tracking-widest uppercase px-6 py-2 rounded hover:bg-white hover:text-black transition-all shadow-[0_0_15px_rgba(255,184,0,0.3)]">Save Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+</body>
+</html>

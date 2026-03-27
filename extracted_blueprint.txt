@@ -1,0 +1,48 @@
+Here is a blueprint for the www.fouralpha.org landing page. This design aims to balance the profound philosophical depth of the model with the urgent, practical rigor of Process Excellence.
+Visual Concept & Branding
+Theme: "Space-Time Invariant Wisdom meets Modern Process Rigor."
+Aesthetic: Clean, futuristic but grounded. Think high-end consulting meets a scientific research institute.
+Color Palette: Deep cosmic blues and purples (representing universal, timeless truth and the "Subtle"), accented with bright gold/amber (representing illumination, wealth/Artha, and the "Gross" manifestation), anchored by clean white and slate grey for data and process elements.
+Key Visual Metaphor: A stylized upward spiral or helix, moving from a solid, tangible base (Gross) to a refined, glowing apex (Subtle), integrated with data points and a compass rose.
+The Landing Page Visual
+Below is a visual representation of the website's homepage, capturing the navigation structure and the central diagnostic hook.
+The visual above provides a clear benchmark for the www.fouralpha.org landing page. It captures the necessary blend of philosophical depth and actionable, data-driven rigor.
+Here is the detailed breakdown of the navigation structure depicted in the image, which will serve as the blueprint for building your site's architecture.
+Website Navigation Hierarchy (Sitemap)
+The site is structured around five main "Parent" pillars, designed to guide a user from theoretical understanding to practical application and final certification.
+1. Parent: THE FOUNDATION (Theory)
+Where the "visiting alien" or new user learns the space-time invariant laws of human trajectory.
+Child Page: The Four Alpha Model
+Sub-Child: The Universal Trajectory (Mapping Artha, Kama, Dharma, Moksha to \alpha_{1-4})
+Sub-Child: Gross vs. Subtle Dynamics (Defining tangible vs. stabilizing metrics)
+Child Page: The Rule of Sequence (Forward vs. Reverse)
+Sub-Child: The Holistic Path (\alpha_1 --> \alpha_4)
+Sub-Child: The Pitfalls (Cults, Corruption, & Commodification traps)
+Child Page: Mathematics of Life (N* & FTOPs)
+Sub-Child: The N^* Score Calculator Logic
+Sub-Child: The 9 FTOPs & Dwivedi-Nash Cooperative Equilibrium
+2. Parent: APPLICATION SPHERES (Context)
+Where the user selects their specific domain to apply the model.
+Child Page: \alpha for the Self (Individual Flow Design)
+Child Page: \alpha for the Family (Household Charters & SOPs)
+Child Page: \alpha for Organization (Community & Corporate Excellence Cells)
+Child Page: \alpha for the Nation (Policy Frameworks: NEP 2020 --> 2030)
+Child Page: \alpha for the Globe (Universal Standards & Geopolitics)
+3. Parent: METHODOLOGY (Lean Sigma Integration)
+The "Engine Room" where philosophical goals are converted into process execution.
+Child Page: The Alpha Toolkit (Removing the 3Ds: Delay, Defects, Deviations)
+Child Page: DMAIC for Life (Define, Measure, Analyze, Improve, Control guides)
+Child Page: CAPA & Root Cause Analysis (Correction & Prevention tools)
+Child Page: Research & Validation (RCTs and Scientific Backing)
+4. Parent: TRAINING & CERTIFICATION (Belts)
+The structured educational pathway for formalizing knowledge.
+Child Page: White Belt (Awareness & Terminology)
+Child Page: Yellow Belt (Foundational Personal Application)
+Child Page: Green Belt (Advanced Tools & Family/Team Projects)
+Child Page: Black Belt (Policy, Complex Systems & Strategy)
+Child Page: Master Black Belt & Champions (Deployment & Teaching)
+5. Parent: MY DASHBOARD / LOGIN (The Hub)
+The secure, personalized command center for the user.
+Child Feature: N^* Baseline Tracker & Radar Chart
+Child Feature: Active Project Charters (Digital DMAIC templates)
+Child Feature: Benchmarking & Community Best Practices

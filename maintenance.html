@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTPPTC2C5Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YTPPTC2C5Q');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Maintenance | Four Alpha AED Lab</title>
+    <link rel="stylesheet" href="tailwind-output.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Montserrat:wght@400;600;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --gold-glow: rgba(255, 184, 0, 0.4);
+            --cosmic-deep: #050816;
+        }
+
+        body {
+            background-color: var(--cosmic-deep);
+            background-image: url('cosmic_maintenance_bg_1771879551940.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .maint-overlay {
+            background: radial-gradient(circle at center, rgba(10, 15, 36, 0.7) 0%, rgba(5, 8, 22, 0.95) 100%);
+            backdrop-blur: 2px;
+        }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-blur: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glow-spin {
+            animation: spin-glow 10s linear infinite;
+        }
+
+        @keyframes spin-glow {
+            from {
+                transform: rotate(0deg);
+                border-color: rgba(255, 184, 0, 0.3);
+            }
+
+            50% {
+                border-color: rgba(255, 184, 0, 0.8);
+                box-shadow: 0 0 40px var(--gold-glow);
+            }
+
+            to {
+                transform: rotate(360deg);
+                border-color: rgba(255, 184, 0, 0.3);
+            }
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #fff 0%, #FFB800 50%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: flow 5s linear infinite;
+        }
+
+        @keyframes flow {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .scanning-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FFB800, transparent);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: scan 3s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0%;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="text-white font-sans antialiased min-h-screen selection:bg-gold selection:text-black">
+    <div class="fixed inset-0 maint-overlay z-0"></div>
+
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div
+            class="premium-glass p-10 md:p-20 rounded-[2rem] max-w-3xl w-full text-center relative overflow-hidden group">
+            <div class="scanning-line"></div>
+
+            <!-- Logo/Icon Section -->
+            <div class="relative mb-12">
+                <div
+                    class="w-28 h-28 mx-auto rounded-full border-2 border-gold/30 flex items-center justify-center bg-black/40 glow-spin relative z-20">
+                    <i
+                        class="fas fa-atom text-5xl text-gold group-hover:scale-110 transition-transform duration-500"></i>
+                </div>
+                <div class="absolute inset-0 bg-gold/5 blur-3xl rounded-full scale-150 -z-10"></div>
+            </div>
+
+            <!-- Status Badge -->
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/5 border border-gold/20 text-gold text-[10px] font-black tracking-[0.4em] uppercase mb-8 animate-pulse">
+                <span class="w-2 h-2 rounded-full bg-gold shadow-[0_0_10px_#FFB800]"></span>
+                Algorithmic Calibration In Progress
+            </div>
+
+            <!-- Main Heading -->
+            <h1
+                class="text-gradient-gold text-4xl md:text-6xl font-black tracking-tighter uppercase mb-6 lg:leading-tight">
+                System<br>Architecture<br>Upgrade
+            </h1>
+
+            <!-- Description -->
+            <p class="font-serif text-gray-400 text-lg md:text-xl leading-relaxed mb-12 max-w-xl mx-auto opacity-80">
+                The <span class="text-white font-semibold">Four Alpha AED Lab</span> core engine is being re-indexed for
+                enhanced performance.
+                Our primary nodes are undergoing scheduled maintenance to ensure operational equilibrium.
+            </p>
+
+            <!-- Technical Status -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 pt-8 border-t border-white/5">
+                <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Status</p>
+                    <p class="text-xs font-bold text-gold uppercase">Optimizing</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Version</p>
+                    <p class="text-xs font-bold text-white uppercase">4.0.ALPHA</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Restoration</p>
+                    <p class="text-xs font-bold text-emerald-400 uppercase">Imminent</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="window.location.reload()"
+                    class="shimmer-btn bg-gold text-black px-10 py-4 rounded-full font-black tracking-widest text-xs uppercase hover:bg-white transition-all shadow-2xl">
+                    <i class="fas fa-sync-alt mr-2"></i> Ping System
+                </button>
+                <a href="mailto:support@fouralpha.org"
+                    class="bg-white/5 hover:bg-white/10 px-10 py-4 rounded-full font-black tracking-widest text-xs uppercase border border-white/10 transition-all flex items-center justify-center">
+                    <i class="fas fa-paper-plane mr-2"></i> Support Vector
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="mt-16 flex justify-center gap-8 text-gray-500">
+                <a href="https://x.com/4A_AED_Lab" target="_blank" class="hover:text-gold transition-colors"><i
+                        class="fab fa-x-twitter text-xl"></i></a>
+                <a href="https://linkedin.com/company/4-%CE%B1-aed-lab/" target="_blank"
+                    class="hover:text-gold transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+                <a href="https://instagram.com/4a_aed_lab/" target="_blank" class="hover:text-gold transition-colors"><i
+                        class="fab fa-instagram text-xl"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="fixed bottom-10 left-10 text-[8px] font-mono text-gray-700 tracking-[0.5em] uppercase vertical-text hidden lg:block"
+        style="writing-mode: vertical-rl;">
+        Human Optimization Matrix // Node: Active
+    </div>
+    <div class="fixed top-10 right-10 text-[8px] font-mono text-gray-700 tracking-[0.5em] uppercase vertical-text hidden lg:block"
+        style="writing-mode: vertical-rl;">
+        Operational Equilibrium // Phase: Alpha
+    </div>
+</body>
+
+</html>

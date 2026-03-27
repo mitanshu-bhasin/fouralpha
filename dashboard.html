@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTPPTC2C5Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YTPPTC2C5Q');
+    </script>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title data-cms-id="dashboard-seo-title">Dashboard | Four Alpha AED Lab</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap&family=Montserrat:wght@400;600;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.min.js" defer></script>
+    <link rel="stylesheet" href="tailwind-output.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <script type="module" src="auth.min.js"></script>
+    <script type="module" defer>
+        import { app, db } from './firebase-config.js';
+        import { getAuth, onAuthStateChanged, updateProfile, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js?v=1.0.5";
+        import { doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        const auth = getAuth(app);
+
+        // Profile Elements
+        const nameDisplay = document.getElementById('user-display-name');
+        const nameInput = document.getElementById('new-name');
+        const updateBtn = document.getElementById('update-name-btn');
+        const resetPasswordBtn = document.getElementById('reset-password-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Dashboard Stat Elements
+        const nScoreDisplay = document.getElementById('n-score-display');
+        const nScoreBar = document.getElementById('n-score-bar');
+        const alpha1Bar = document.getElementById('alpha1-bar');
+        const alpha1Text = document.getElementById('alpha1-text');
+        const alpha2Bar = document.getElementById('alpha2-bar');
+        const alpha2Text = document.getElementById('alpha2-text');
+        const alpha3Bar = document.getElementById('alpha3-bar');
+        const alpha3Text = document.getElementById('alpha3-text');
+        const alpha4Bar = document.getElementById('alpha4-bar');
+        const alpha4Text = document.getElementById('alpha4-text');
+        const projectsContainer = document.getElementById('projects-container');
+
+        // Modal Elements
+        const assessBtn = document.getElementById('open-assess-modal');
+        const assessModal = document.getElementById('assess-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const assessForm = document.getElementById('assess-form');
+
+        let currentUserUid = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                nameDisplay.textContent = user.displayName || "Operative";
+                nameInput.value = user.displayName || "";
+
+                // Set up real-time listener for user data
+                setupDataListener(user.uid);
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        function setupDataListener(uid) {
+            const userRef = doc(db, "users", uid);
+
+            onSnapshot(userRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.name) {
+                        nameDisplay.textContent = data.name;
+                    }
+                    renderDashboard(data);
+                } else {
+                    // Initialize if empty
+                    renderDashboard({
+                        alphas: {
+                            a1g: 0, a1s: 0,
+                            a2g: 0, a2s: 0,
+                            a3g: 0, a3s: 0,
+                            a4g: 0, a4s: 0
+                        },
+                        projects: []
+                    });
+                }
+            });
+        }
+
+        function renderDashboard(data) {
+            const alphas = data.alphas || {
+                a1g: 0, a1s: 0,
+                a2g: 0, a2s: 0,
+                a3g: 0, a3s: 0,
+                a4g: 0, a4s: 0
+            };
+
+            // N* = Σ{i=1}{4} wi [0.4(Gi) + 0.6(Si)]
+            // Assuming equal weights for now (w_i = 1)
+            const calcAlpha = (g, s) => {
+                const valG = parseFloat(g) || 0;
+                const valS = parseFloat(s) || 0;
+                return (0.4 * (valG / 100)) + (0.6 * (valS / 100));
+            };
+
+            const a1Score = calcAlpha(alphas.a1g, alphas.a1s);
+            const a2Score = calcAlpha(alphas.a2g, alphas.a2s);
+            const a3Score = calcAlpha(alphas.a3g, alphas.a3s);
+            const a4Score = calcAlpha(alphas.a4g, alphas.a4s);
+
+            // Average N* score across 4 domains (max 1.0)
+            const nScoreRaw = (a1Score + a2Score + a3Score + a4Score) / 4;
+            const nScore = (nScoreRaw * 10).toFixed(2); // Scale to 0-10 for display? Or 0.0-1.0
+            const nScoreDisplayValue = (nScoreRaw).toFixed(2);
+
+            nScoreDisplay.textContent = nScoreDisplayValue;
+            if (nScoreBar) nScoreBar.style.width = `${nScoreRaw * 100}%`;
+
+            // Color logic for gauge (Red <0.4, Amber 0.4-0.7, Green >0.7)
+            if (nScoreRaw < 0.4) {
+                nScoreDisplay.className = "text-6xl font-black text-red-500 mb-2";
+                if (nScoreBar) nScoreBar.className = "h-full w-[0%] transition-all duration-1000 bg-red-500 shadow-[0_0_15px_#ef4444]";
+            } else if (nScoreRaw <= 0.7) {
+                nScoreDisplay.className = "text-6xl font-black text-amber-500 mb-2";
+                if (nScoreBar) nScoreBar.className = "h-full w-[0%] transition-all duration-1000 bg-amber-500 shadow-[0_0_15px_#f59e0b]";
+            } else {
+                nScoreDisplay.className = "text-6xl font-black text-green-500 mb-2";
+                if (nScoreBar) nScoreBar.className = "h-full w-[0%] transition-all duration-1000 bg-green-500 shadow-[0_0_15px_#22c55e]";
+            }
+
+            // Render Certifications FIRST or with error handling to ensure display
+            try {
+                renderCertifications(data);
+            } catch (err) {
+                console.error("Error rendering certifications:", err);
+            }
+
+            // Radar Chart implementation with error handling
+            try {
+                renderRadarChart(a1Score, a2Score, a3Score, a4Score);
+            } catch (err) {
+                console.error("Error rendering radar chart:", err);
+            }
+
+            alpha1Text.textContent = `${(a1Score * 100).toFixed(0)}%`;
+            alpha1Bar.style.width = `${a1Score * 100}%`;
+            alpha2Text.textContent = `${(a2Score * 100).toFixed(0)}%`;
+            alpha2Bar.style.width = `${a2Score * 100}%`;
+            alpha3Text.textContent = `${(a3Score * 100).toFixed(0)}%`;
+            alpha3Bar.style.width = `${a3Score * 100}%`;
+            alpha4Text.textContent = `${(a4Score * 100).toFixed(0)}%`;
+            alpha4Bar.style.width = `${a4Score * 100}%`;
+
+            // Render Projects
+            projectsContainer.innerHTML = '';
+            if (data.projects && data.projects.length > 0) {
+                data.projects.forEach(proj => {
+                    const projEl = document.createElement('div');
+                    const isActive = proj.status !== 'Completed';
+                    projEl.className = `p-3 border border-white/10 rounded group transition-colors ${isActive ? 'hover:border-gold/50' : 'opacity-60'}`;
+                    projEl.innerHTML = `
+                        <div class="text-[10px] ${isActive ? 'text-gold' : 'text-gray-400'} font-bold mb-1 uppercase">${proj.belt} Project</div>
+                        <div class="text-xs font-bold ${isActive ? 'text-white' : 'text-gray-400'} uppercase mb-1">${proj.name}</div>
+                        <div class="text-[10px] ${isActive ? 'text-gray-400' : 'text-green-500 font-bold'} uppercase">${isActive ? 'Phase: ' + proj.status : 'Status: Completed'}</div>
+                    `;
+                    projectsContainer.appendChild(projEl);
+                });
+            } else {
+                projectsContainer.innerHTML = '<div class="text-xs text-gray-400 italic">No active charters found.</div>';
+            }
+        }
+
+        let radarChartInstance = null;
+        function renderRadarChart(a1, a2, a3, a4) {
+            const ctx = document.getElementById('radar-chart');
+            if (!ctx) return;
+
+            if (radarChartInstance) {
+                radarChartInstance.destroy();
+            }
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Resource (α1)', 'Relational (α2)', 'Ethical (α3)', 'Mastery (α4)'],
+                    datasets: [{
+                        label: 'Systemic Bottlenecks',
+                        data: [a1 * 100, a2 * 100, a3 * 100, a4 * 100],
+                        backgroundColor: 'rgba(255, 184, 0, 0.2)',
+                        borderColor: 'rgba(255, 184, 0, 1)',
+                        pointBackgroundColor: 'rgba(255, 184, 0, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(255, 184, 0, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            pointLabels: { color: '#9ca3af', font: { size: 10, family: 'Montserrat' } },
+                            ticks: { display: false, min: 0, max: 100 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Profile Update
+        if (updateBtn) {
+            updateBtn.addEventListener('click', async () => {
+                const newName = nameInput.value;
+                if (!newName) return;
+
+                updateBtn.disabled = true;
+                updateBtn.textContent = "UPDATING...";
+
+                try {
+                    // 1. Update Firebase Auth Profile
+                    await updateProfile(auth.currentUser, {
+                        displayName: newName
+                    });
+
+                    // 2. Update Firestore document to persist the name
+                    const userRef = doc(db, "users", currentUserUid);
+                    await setDoc(userRef, {
+                        name: newName
+                    }, { merge: true });
+
+                    nameDisplay.textContent = newName;
+                    alert("Profile updated successfully!");
+                } catch (error) {
+                    console.error("Profile update error:", error);
+                    alert("Error updating profile: " + error.message);
+                } finally {
+                    updateBtn.disabled = false;
+                    updateBtn.textContent = "UPDATE PROFILE";
+                }
+            });
+        }
+
+        if (resetPasswordBtn) {
+            resetPasswordBtn.addEventListener('click', async () => {
+                if (!auth.currentUser || !auth.currentUser.email) {
+                    alert("No email associated with this account or user not fully loaded.");
+                    return;
+                }
+                resetPasswordBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> SENDING...';
+                resetPasswordBtn.disabled = true;
+
+                try {
+                    await sendPasswordResetEmail(auth, auth.currentUser.email);
+                    alert("Password reset email sent. Please check your inbox.");
+                } catch (error) {
+                    alert("Error sending password reset: " + error.message);
+                } finally {
+                    resetPasswordBtn.innerHTML = '<i class="fas fa-key mr-2"></i> RESET PASSWORD';
+                    resetPasswordBtn.disabled = false;
+                }
+            });
+        }
+
+        // Modal Logic
+        assessBtn.addEventListener('click', () => {
+            assessModal.classList.remove('hidden');
+            // Pre-fill if data exists
+            if (currentUserUid) {
+                getDoc(doc(db, "users", currentUserUid)).then(snap => {
+                    if (snap.exists()) {
+                        const d = snap.data();
+                        if (d.alphas) {
+                            document.getElementById('input-a1-g').value = d.alphas.a1g || 0;
+                            document.getElementById('input-a1-s').value = d.alphas.a1s || 0;
+                            document.getElementById('input-a2-g').value = d.alphas.a2g || 0;
+                            document.getElementById('input-a2-s').value = d.alphas.a2s || 0;
+                            document.getElementById('input-a3-g').value = d.alphas.a3g || 0;
+                            document.getElementById('input-a3-s').value = d.alphas.a3s || 0;
+                            document.getElementById('input-a4-g').value = d.alphas.a4g || 0;
+                            document.getElementById('input-a4-s').value = d.alphas.a4s || 0;
+                        }
+                    }
+                })
+            }
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            assessModal.classList.add('hidden');
+        });
+
+        assessForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUserUid) return;
+
+            const btn = document.getElementById('save-assess-btn');
+            btn.textContent = "SAVING...";
+            btn.disabled = true;
+
+            const alphas = {
+                a1g: parseInt(document.getElementById('input-a1-g').value) || 0,
+                a1s: parseInt(document.getElementById('input-a1-s').value) || 0,
+                a2g: parseInt(document.getElementById('input-a2-g').value) || 0,
+                a2s: parseInt(document.getElementById('input-a2-s').value) || 0,
+                a3g: parseInt(document.getElementById('input-a3-g').value) || 0,
+                a3s: parseInt(document.getElementById('input-a3-s').value) || 0,
+                a4g: parseInt(document.getElementById('input-a4-g').value) || 0,
+                a4s: parseInt(document.getElementById('input-a4-s').value) || 0
+            };
+
+            const pName = document.getElementById('input-proj-name').value;
+            const pBelt = document.getElementById('input-proj-belt').value;
+            const pStatus = document.getElementById('input-proj-status').value;
+
+            try {
+                const userRef = doc(db, "users", currentUserUid);
+                const docSnap = await getDoc(userRef);
+
+                let projects = [];
+                if (docSnap.exists() && docSnap.data().projects) {
+                    projects = docSnap.data().projects;
+                }
+
+                if (pName) {
+                    projects.push({ name: pName, belt: pBelt, status: pStatus });
+                }
+
+                await setDoc(userRef, {
+                    alphas: alphas,
+                    projects: projects
+                }, { merge: true });
+
+                assessModal.classList.add('hidden');
+                assessForm.reset();
+            } catch (error) {
+                console.error("Error saving assessment:", error);
+                alert("Failed to save data.");
+            } finally {
+                btn.textContent = "SAVE ASSESSMENT";
+                btn.disabled = false;
+            }
+        });
+
+        async function renderCertifications(data) {
+            console.log("Rendering certifications with data:", data);
+            const certsContainer = document.getElementById('certifications-container');
+            if (!certsContainer) return;
+
+            try {
+                certsContainer.innerHTML = '';
+                const certDefs = [
+                    { id: 'whiteBelt', name: 'White Belt', gradient: 'from-white/10', border: 'border-white/30', text: 'text-white', bgHover: 'hover:bg-white', textHover: 'hover:text-black', borderFull: 'border-white/50', bgIcon: 'bg-white/20', icon: 'fa-bolt', path: 'white-belt' },
+                    { id: 'yellowBelt', name: 'Yellow Belt', gradient: 'from-gold/10', border: 'border-gold/30', text: 'text-gold', bgHover: 'hover:bg-gold', textHover: 'hover:text-black', borderFull: 'border-gold/50', bgIcon: 'bg-gold/20', icon: 'fa-khanda', path: 'yellow-belt' },
+                    { id: 'greenBelt', name: 'Green Belt', gradient: 'from-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-500', bgHover: 'hover:bg-emerald-500', textHover: 'hover:text-black', borderFull: 'border-emerald-500/50', bgIcon: 'bg-emerald-500/20', icon: 'fa-microchip', path: 'green-belt' },
+                    { id: 'blackBelt', name: 'Black Belt', gradient: 'from-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-500', bgHover: 'hover:bg-rose-500', textHover: 'hover:text-black', borderFull: 'border-rose-500/50', bgIcon: 'bg-rose-500/20', icon: 'fa-user-ninja', path: 'black-belt' },
+                    { id: 'masterBlackBelt', name: 'Master Black Belt', gradient: 'from-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-500', bgHover: 'hover:bg-purple-500', textHover: 'hover:text-black', borderFull: 'border-purple-500/50', bgIcon: 'bg-purple-500/20', icon: 'fa-crown', path: 'masters' }
+                ];
+
+                certDefs.forEach(certDef => {
+                    const certData = data.certifications ? data.certifications[certDef.id] : null;
+                    const isCompleted = certData?.completed;
+
+                    const certEl = document.createElement('div');
+                    if (isCompleted) {
+                        certEl.className = `bg-gradient-to-br ${certDef.gradient} to-transparent border ${certDef.border} p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 mb-3 transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.05)]`;
+                        certEl.innerHTML = `
+                            <div class="flex items-center gap-4 w-full">
+                                <div class="${certDef.text} text-3xl shrink-0"><i class="fas ${certDef.icon}"></i></div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm tracking-widest uppercase">Four Alpha ${certDef.name}</h4>
+                                    <p class="text-[10px] text-gray-400 font-mono mt-1 uppercase">Earned: ${certData.date || 'Active'} | ID: ${certData.certId || 'EL-101'}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                                <button id="copy-btn-${certData.certId || certDef.id}" class="flex-1 sm:flex-none bg-white/10 hover:bg-white text-white hover:text-black border border-white/50 px-4 py-2 rounded text-[10px] font-bold tracking-widest uppercase transition-all whitespace-nowrap" onclick="window.copyCertLink('${certData.certId || ''}')">
+                                    <i class="fas fa-link mr-1"></i> Link
+                                </button>
+                                <button class="flex-1 sm:flex-none ${certDef.bgIcon} ${certDef.bgHover} ${certDef.text} ${certDef.textHover} border ${certDef.borderFull} px-4 py-2 rounded text-[10px] font-bold tracking-widest uppercase transition-all whitespace-nowrap" onclick="window.location.href='${certDef.path}/index.html#milestone'">
+                                    <i class="fas fa-file-pdf mr-1"></i> PDF
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        // Locked Cert
+                        certEl.className = `bg-black/20 border border-white/5 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 mb-3 opacity-60 grayscale`;
+                        certEl.innerHTML = `
+                            <div class="flex items-center gap-4 w-full">
+                                <div class="text-gray-500 text-3xl shrink-0"><i class="fas fa-lock"></i></div>
+                                <div>
+                                    <h4 class="text-gray-400 font-bold text-sm tracking-widest uppercase">Four Alpha ${certDef.name}</h4>
+                                    <p class="text-[10px] text-gray-500 font-mono mt-1 uppercase">Status: Locked / Prerequisites Pending</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                                <button class="w-full sm:w-auto bg-white/5 border border-white/10 text-gray-400 px-6 py-2 rounded text-[10px] font-bold tracking-widest uppercase hover:bg-white/10 hover:text-white transition-all" onclick="window.location.href='${certDef.path}/index.html'">
+                                    Begin Module
+                                </button>
+                            </div>
+                        `;
+                    }
+                    certsContainer.appendChild(certEl);
+                });
+            } catch (error) {
+                console.error("Critical error inside renderCertifications:", error);
+                certsContainer.innerHTML = `<div class="text-xs text-red-500 italic p-4 border border-red-500/20 rounded-xl bg-red-500/5 text-center">Error loading certifications. Check console.</div>`;
+            }
+        }
+
+        // Expose function globally for the inline onclick handler
+        window.copyCertLink = (certId) => {
+            const url = window.location.origin + '/verify.html?id=' + certId;
+            const btn = document.getElementById('copy-btn-' + certId);
+            const originalHtml = btn ? btn.innerHTML : '';
+
+            const showSuccess = () => {
+                if (btn) {
+                    btn.innerHTML = `<i class="fas fa-check"></i> Copied`;
+                    setTimeout(() => btn.innerHTML = originalHtml, 2000);
+                }
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url).then(showSuccess).catch(err => {
+                    console.warn("Clipboard API failed, using fallback");
+                    fallbackCopyTextToClipboard(url, showSuccess);
+                });
+            } else {
+                fallbackCopyTextToClipboard(url, showSuccess);
+            }
+        };
+
+        function fallbackCopyTextToClipboard(text, successCallback) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; // prevent scrolling
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                successCallback();
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                alert("Failed to copy link. Your browser might block it. The link is: " + text);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Removed monkey-patched code for renderCertifications
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'index.html';
+                });
+            });
+        }
+
+        window.signOutUser = () => {
+            signOut(auth).then(() => {
+                window.location.href = 'index.html';
+            });
+        };
+
+        const lbDesktop = document.getElementById('logout-btn-desktop');
+        const lbMobile = document.getElementById('logout-btn-mobile');
+        if (lbDesktop) lbDesktop.onclick = window.signOutUser;
+        if (lbMobile) lbMobile.onclick = window.signOutUser;
+    </script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .1);
+            backdrop-filter: blur(12px)
+        }
+    </style>
+    <link rel="canonical" href="https://www.fouralpha.org/dashboard.html">
+    <meta name="description"
+        content="Explore Dashboard at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium."
+        data-cms-id="dashboard-seo-desc">
+    <meta name="keywords"
+        content="Four Alpha, foundational frameworks, human trajectory, strategic implications, equilibrium">
+    <meta property="og:title" content="Dashboard | Four Alpha AED Lab">
+    <meta property="og:description"
+        content="Explore Dashboard at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.fouralpha.org/dashboard.html">
+    <meta property="og:image" content="https://www.fouralpha.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dashboard | Four Alpha AED Lab">
+    <meta name="twitter:description"
+        content="Explore Dashboard at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium.">
+    <meta name="twitter:image" content="https://www.fouralpha.org/og-image.png">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://www.fouralpha.org/opensearch.xml"
+        title="Four Alpha Search">
+    <meta name="msapplication-config" content="https://www.fouralpha.org/browserconfig.xml">
+    <meta name="theme-color" content="#0d1117">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Dashboard | Four Alpha AED Lab",
+  "description": "Explore Dashboard at Four Alpha AED Lab. Uncover foundational frameworks, strategic implications, and actionable mechanics for optimizing human trajectory and operational equilibrium.",
+  "url": "https://www.fouralpha.org/dashboard.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dashboard | Four Alpha AED Lab",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.fouralpha.org/dashboard.html"
+    }
+  }
+}</script>
+</head>
+
+<body class="bg-cosmic-dark text-white font-sans antialiased overflow-x-hidden selection:bg-gold selection:text-black">
+    <nav
+        class="fixed top-0 w-full z-50 bg-cosmic-dark/90 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:pl-2 lg:pr-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer lg:-ml-6"
+                    onclick="window.location.href='index.html'">
+                    <div
+                        class="w-10 h-10 rounded-full border-2 border-gold flex items-center justify-center text-gold shadow-[0_0_10px_rgba(255,184,0,0.5)]">
+                        <i class="fas fa-compass"></i>
+                    </div><span class="font-black text-xl tracking-widest text-white">FOUR <span
+                            class="text-gold">ALPHA</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 lg:space-x-6 text-sm font-semibold tracking-wide">
+                    <div class="relative group py-6"><button
+                            class="hover:text-gold transition-colors flex items-center gap-1">THE FOUNDATION <i
+                                class="fas fa-chevron-down text-xs"></i></button>
+                        <div
+                            class="absolute left-0 mt-4 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                            <a href="four-alpha-model.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">The
+                                Four Alpha Model</a> <a href="gross-vs-subtle.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">Gross
+                                vs. Subtle Dynamics</a> <a href="four-alpha-model.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">The
+                                Rule of Sequence</a> <a href="math-of-life.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold">Mathematics of Life (N* &
+                                FTOPs)</a>
+                        </div>
+                    </div>
+                    <div class="relative group py-6"><button
+                            class="hover:text-gold transition-colors flex items-center gap-1">APPLICATION SPHERES <i
+                                class="fas fa-chevron-down text-xs"></i></button>
+                        <div
+                            class="absolute left-0 mt-4 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                            <a href="alpha-self.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">&alpha;
+                                for the Self</a> <a href="alpha-family.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">&alpha;
+                                for the Family</a> <a href="alpha-org.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">&alpha;
+                                for Organizations</a> <a href="alpha-nation.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">&alpha;
+                                for the Nation</a> <a href="alpha-globe.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold">&alpha; for the Globe</a>
+                        </div>
+                    </div>
+                    <div class="relative group py-6"><button
+                            class="hover:text-gold transition-colors flex items-center gap-1">METHODOLOGY <i
+                                class="fas fa-chevron-down text-xs"></i></button>
+                        <div
+                            class="absolute left-0 mt-4 w-60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                            <a href="alpha-toolkit.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">The
+                                Alpha Toolkit</a> <a href="dmaic-life.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">DMAIC
+                                for Life</a> <a href="capa-rca.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">CAPA &
+                                RCA</a> <a href="research-validation.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold">Research & Validation
+                                (RCTs)</a>
+                        </div>
+                    </div>
+                    <div class="relative group py-6"><button
+                            class="hover:text-gold transition-colors flex items-center gap-1">CERTIFICATION <i
+                                class="fas fa-chevron-down text-xs"></i></button>
+                        <div
+                            class="absolute left-0 mt-4 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                            <a href="champions.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5"><i
+                                    class="fas fa-crown text-slate-300 mr-2"></i>Champions </a><a
+                                href="white-belt/index.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">White
+                                Belt (Awareness)</a> <a href="yellow-belt/index.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">Yellow
+                                Belt (Foundational)</a> <a href="green-belt/index.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">Green
+                                Belt (Advanced)</a> <a href="black-belt/index.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold border-b border-white/5">Black
+                                Belt (Complex Systems)</a> <a href="masters.html"
+                                class="block px-4 py-3 hover:bg-white/5 hover:text-gold">Master Black Belt &
+                                Champions</a>
+                        </div>
+                    </div>
+                    <div class="relative group py-6"><button
+                            class="hover:text-gold transition-colors flex items-center gap-1 uppercase tracking-wide">Policy & Governance <i class="fas fa-chevron-down text-xs"></i></button>
+                        <div
+                            class="absolute left-0 mt-4 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-cosmic-accent border border-white/10 rounded-lg shadow-xl overflow-hidden py-4">
+                            <div class="px-4 pb-2 border-b border-white/5 mb-2"><a
+                                    href="education-policy/global/index.html"
+                                    class="block font-bold text-gold hover:text-white transition-colors mb-1">GLOBAL
+                                    POLICY</a>
+                                <div class="pl-2 space-y-1"><a href="education-policy/global/saarc/india.html"
+                                        class="block text-[11px] text-gray-400 hover:text-gold uppercase">SAARC
+                                        Nations</a> <a href="education-policy/global/brics/india.html"
+                                        class="block text-[11px] text-gray-400 hover:text-gold uppercase">BRICS</a>
+                                </div>
+                            </div>
+                            <div class="px-4 pt-2"><a href="education-policy/national/index.html"
+                                    class="block font-bold text-gold hover:text-white transition-colors mb-1">NATIONAL
+                                    POLICY</a>
+                                <div class="pl-2 grid grid-cols-2 gap-x-2 gap-y-1 mt-2"><a
+                                        href="education-policy/national/nep-1968.html"
+                                        class="block text-[10px] text-gray-400 hover:text-gold">NEP 1968</a> <a
+                                        href="education-policy/national/nep-1986.html"
+                                        class="block text-[10px] text-gray-400 hover:text-gold">NEP 1986</a> <a
+                                        href="education-policy/national/nep-2020.html"
+                                        class="block text-[10px] text-gray-400 hover:text-gold">NEP 2020</a> <a
+                                        href="education-policy/national/nep-2030.html"
+                                        class="block text-[10px] text-gray-400 hover:text-gold">NEP 2030</a> <a
+                                        href="education-policy/national/nep-2040.html"
+                                        class="block text-[10px] text-gray-400 hover:text-gold">NEP 2040</a> <a
+                                        href="education-policy/national/nep-2050.html"
+                                        class="block text-[10px] text-gray-400 hover:text-gold">NEP 2050</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="google_translate_element" class="ml-4 flex items-center"></div>
+                    <button id="logout-btn-desktop"
+                        class="bg-red-500/10 border border-red-500/30 text-red-500 px-6 py-2 rounded-sm font-bold hover:bg-red-500 hover:text-white transition-all shadow-[0_0_15px_rgba(239,68,68,0.2)] ml-4 whitespace-nowrap">LOGOUT
+                        <i class="fas fa-sign-out-alt ml-1"></i></button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" aria-label="Open Navigation Menu" aria-expanded="false"
+                        class="text-gold hover:text-white text-2xl focus:outline-none transition-transform duration-300">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </nav>
+<div id="mobile-menu" class="fixed inset-y-0 right-0 w-80 border-l border-white/10 z-[100] transform translate-x-full transition-transform duration-300 ease-in-out hidden flex flex-col shadow-2xl overflow-y-auto">
+
+    <div class="flex justify-between items-center p-6 border-b border-white/5 bg-white/5">
+        <span class="font-black text-lg tracking-widest text-white">MENU</span>
+        <button onclick="document.getElementById('mobile-menu-button').click()" class="text-gold hover:text-white transition-colors">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+    </div>
+
+            <div class="px-6 mt-4 pb-20 space-y-2 flex-grow">
+                <div><button onclick='toggleMobileDropdown("mobile-drop-1",this)'
+                        class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5">The
+                        Foundation <i class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"></i></button>
+                    <div id="mobile-drop-1" class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"><a
+                            href="four-alpha-model.html" class="block py-2 text-sm text-gray-300 hover:text-gold">The
+                            Four Alpha Model</a> <a href="gross-vs-subtle.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">Gross vs. Subtle Dynamics</a> <a
+                            href="four-alpha-model.html" class="block py-2 text-sm text-gray-300 hover:text-gold">The
+                            Rule of Sequence</a> <a href="math-of-life.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">Mathematics of Life (N* &
+                            FTOPs)</a></div>
+                </div>
+                <div><button onclick='toggleMobileDropdown("mobile-drop-2",this)'
+                        class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5">Application
+                        Spheres <i class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"></i></button>
+                    <div id="mobile-drop-2" class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"><a
+                            href="alpha-self.html" class="block py-2 text-sm text-gray-300 hover:text-gold">α for the
+                            Self</a> <a href="alpha-family.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">α for the Family</a> <a
+                            href="alpha-org.html" class="block py-2 text-sm text-gray-300 hover:text-gold">α for
+                            Organizations</a> <a href="alpha-nation.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">α for the Nation</a> <a
+                            href="alpha-globe.html" class="block py-2 text-sm text-gray-300 hover:text-gold">α for the
+                            Globe</a></div>
+                </div>
+                <div><button onclick='toggleMobileDropdown("mobile-drop-3",this)'
+                        class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5">Methodology
+                        <i class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"></i></button>
+                    <div id="mobile-drop-3" class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"><a
+                            href="alpha-toolkit.html" class="block py-2 text-sm text-gray-300 hover:text-gold">The Alpha
+                            Toolkit</a> <a href="dmaic-life.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">DMAIC for Life</a> <a
+                            href="capa-rca.html" class="block py-2 text-sm text-gray-300 hover:text-gold">CAPA & RCA</a>
+                        <a href="research-validation.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">Research & Validation (RCTs)</a>
+                    </div>
+                </div>
+                <div><button onclick='toggleMobileDropdown("mobile-drop-4",this)'
+                        class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5">Certification
+                        <i class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"></i></button>
+                    <div id="mobile-drop-4" class="hidden pl-4 py-2 space-y-2 bg-white/5 rounded-b-lg"><a
+                            href="champions.html" class="block py-2 text-sm text-gray-300 hover:text-gold"><i
+                                class="fas fa-crown text-slate-300 mr-2 text-xs"></i>Champions </a><a
+                            href="white-belt/index.html" class="block py-2 text-sm text-gray-300 hover:text-gold">White
+                            Belt (Awareness)</a> <a href="yellow-belt/index.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">Yellow Belt (Foundational)</a> <a
+                            href="green-belt/index.html" class="block py-2 text-sm text-gray-300 hover:text-gold">Green
+                            Belt (Advanced)</a> <a href="black-belt/index.html"
+                            class="block py-2 text-sm text-gray-300 hover:text-gold">Black Belt (Complex Systems)</a> <a
+                            href="masters.html" class="block py-2 text-sm text-gray-300 hover:text-gold">Master Black
+                            Belt & Champions</a></div>
+                </div>
+                <div><button onclick='toggleMobileDropdown("mobile-drop-edu",this)'
+                        class="w-full flex justify-between items-center py-4 text-white font-bold tracking-widest text-sm uppercase hover:text-gold transition-colors border-b border-white/5">Policy & Governance <i class="fas fa-chevron-down text-xs text-gray-400 chevron-icon"></i></button>
+                    <div id="mobile-drop-edu" class="hidden pl-4 py-2 space-y-4 bg-white/5 rounded-b-lg">
+                        <div><a href="education-policy/global/index.html"
+                                class="block py-1 text-xs font-bold text-gold uppercase">Global Education Policy</a>
+                            <div class="pl-4 mt-1 space-y-1"><a href="education-policy/global/saarc/india.html"
+                                    class="block py-1 text-[11px] text-gray-400 hover:text-gold uppercase">SAARC
+                                    Nations</a> <a href="education-policy/global/brics/india.html"
+                                    class="block py-1 text-[11px] text-gray-400 hover:text-gold uppercase">BRICS</a>
+                            </div>
+                        </div>
+                        <div><a href="education-policy/national/index.html"
+                                class="block py-1 text-xs font-bold text-gold uppercase">National Education Policy</a>
+                            <div class="pl-4 mt-1 grid grid-cols-1 gap-2"><a
+                                    href="education-policy/national/nep-1968.html"
+                                    class="block py-1 text-[11px] text-gray-400">NEP 1968</a> <a
+                                    href="education-policy/national/nep-1986.html"
+                                    class="block py-1 text-[11px] text-gray-400">NEP 1986</a> <a
+                                    href="education-policy/national/nep-2020.html"
+                                    class="block py-1 text-[11px] text-gray-400">NEP 2020</a> <a
+                                    href="education-policy/national/nep-2030.html"
+                                    class="block py-1 text-[11px] text-gray-400">NEP 2030</a> <a
+                                    href="education-policy/national/nep-2040.html"
+                                    class="block py-1 text-[11px] text-gray-400">NEP 2040</a> <a
+                                    href="education-policy/national/nep-2050.html"
+                                    class="block py-1 text-[11px] text-gray-400">NEP 2050</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-6 px-2">
+                    <div id="google_translate_element_mobile" class="mb-4"></div>
+                    <button id="logout-btn-mobile"
+                        class="block w-full text-center bg-red-500 text-white px-6 py-4 rounded-sm font-bold hover:bg-red-600 transition-all shadow-lg uppercase tracking-widest text-xs">LOGOUT</button>
+                </div>
+            </div>
+        </div>
+    <main class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 z-0">
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Welcome, <span
+                    id="user-display-name" class="text-gold">Operative</span></h1>
+            <p class="text-gray-400 font-serif italic text-lg">"The architecture of your flourishing is now online."</p>
+        </header>
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1 space-y-8 relative z-0">
+                <div class="glass-card p-8 rounded-2xl relative z-0">
+                    <h2 class="text-xl font-bold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">Profile
+                        Configuration</h2>
+                    <div class="space-y-4">
+                        <div><label
+                                class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Display
+                                Identity</label> <input type="text" id="new-name"
+                                class="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-gold transition-all">
+                        </div><button id="update-name-btn"
+                            class="w-full bg-gold text-cosmic-dark font-black py-3 rounded-lg tracking-widest hover:bg-white transition-all text-sm mb-3">UPDATE
+                            PROFILE</button> <button id="reset-password-btn"
+                            class="w-full flex items-center justify-center bg-transparent border border-white/20 text-white font-black py-3 rounded-lg tracking-widest hover:border-gold hover:text-gold transition-all text-sm"><i
+                                class="fas fa-key mr-2"></i> RESET PASSWORD</button>
+                    </div>
+                </div>
+                <div class="glass-card p-8 rounded-2xl relative z-0">
+                    <h2 class="text-xl font-bold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">System
+                        Status</h2>
+                    <div class="space-y-4">
+                        <div
+                            class="flex justify-between items-center bg-green-500/5 p-3 rounded border border-green-500/20">
+                            <span class="text-xs text-gray-400">Node Sync</span> <span
+                                class="text-xs font-bold text-green-400 uppercase">Active</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-gold/5 p-3 rounded border border-gold/20"><span
+                                class="text-xs text-gray-400">Security Layer</span> <span
+                                class="text-xs font-bold text-gold uppercase">Operational</span></div><button
+                            id="open-assess-modal"
+                            class="w-full bg-white/5 border border-white/20 text-white font-bold py-3 mt-4 rounded-lg tracking-widest hover:bg-white/10 transition-all text-xs uppercase"><i
+                                class="fas fa-edit mr-2"></i> Update Diagnostics</button>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-2 grid md:grid-cols-2 gap-8 relative z-0">
+                <div class="glass-card p-8 rounded-2xl col-span-2 relative z-0">
+                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Aggregate flourishes
+                        metric</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
+                        <div class="text-center md:text-left flex-1">
+                            <div id="n-score-display" class="text-6xl font-black text-gold mb-2">0.0</div>
+                            <div class="text-[10px] tracking-widest text-white uppercase opacity-60">Your N* Baseline
+                            </div>
+                            <div
+                                class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mt-4 max-w-[200px] mx-auto md:mx-0">
+                                <div id="n-score-bar" class="h-full w-0 transition-all duration-1000"></div>
+                            </div>
+                        </div>
+                        <div class="flex-1 w-full max-w-xs"><canvas id="radar-chart"></canvas></div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 rounded-2xl relative z-0">
+                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Domain Analysis</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-2 uppercase tracking-widest"><span>&alpha;1:
+                                    Resource</span> <span id="alpha1-text" class="text-gold">0%</span></div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div id="alpha1-bar" class="bg-white/40 h-full w-[0%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-2 uppercase tracking-widest"><span>&alpha;2:
+                                    Relational</span> <span id="alpha2-text" class="text-gold">0%</span></div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div id="alpha2-bar" class="bg-white/40 h-full w-[0%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-2 uppercase tracking-widest"><span>&alpha;3:
+                                    Ethical</span> <span id="alpha3-text" class="text-gold">0%</span></div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div id="alpha3-bar" class="bg-white/40 h-full w-[0%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-2 uppercase tracking-widest"><span>&alpha;4:
+                                    Mastery</span> <span id="alpha4-text" class="text-gold">0%</span></div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div id="alpha4-bar" class="bg-white/40 h-full w-[0%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 rounded-2xl relative z-0">
+                    <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Active DMAIC Charters
+                    </h3>
+                    <div id="projects-container" class="space-y-4 max-h-[250px] overflow-y-auto pr-2 mb-8"></div>
+                    <h3
+                        class="text-xs font-black text-gray-400 uppercase tracking-widest mb-4 mt-8 pt-8 border-t border-white/10">
+                        Official Certifications</h3>
+                    <div id="certifications-container" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-cosmic-dark text-white border-t border-white/10 relative z-10 flex flex-col">
+
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <!-- Top Section: Brand & Links -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 mt-2">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold border border-gold/20 shadow-[0_0_15px_rgba(255,184,0,0.1)]">
+                        <i class="fas fa-dna text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-black tracking-widest text-lg text-white uppercase">Four Alpha <span
+                                class="text-gold">AED Lab</span></h4>
+                        <p class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5">Foundational Framework for
+                            Human Excellence</p>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    <a href="index.html" class="hover:text-gold transition-colors">Home</a>
+                    <a href="about.html" class="hover:text-gold transition-colors">About</a>
+                    <a href="policy-governance.html" class="hover:text-gold transition-colors">Policy & Governance</a>
+                    <a href="contact.html" class="hover:text-gold transition-colors">Contact</a>
+                    <a href="privacy.html" class="hover:text-gold transition-colors">Privacy</a>
+                    <a href="terms.html" class="hover:text-gold transition-colors">Terms</a>
+                </div>
+
+                <div class="flex gap-3">
+                    <a href="https://facebook.com/4a.aed.lab/"
+                        class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-cosmic-dark transition-all duration-300 text-xs"
+                        aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/4A_AED_Lab"
+                        class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-cosmic-dark transition-all duration-300 text-xs"
+                        aria-label="Follow us on X"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://instagram.com/4a_aed_lab/"
+                        class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-cosmic-dark transition-all duration-300 text-xs"
+                        aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/company/4-%CE%B1-aed-lab/"
+                        class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-gold hover:text-cosmic-dark transition-all duration-300 text-xs"
+                        aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Middle Section: Partners -->
+            <div
+                class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 py-6 border-t border-b border-white/5 mb-8">
+                <a href="https://ipecconsulting.org/" target="_blank"
+                    class="cursor-pointer flex items-center gap-4 group">
+                    <img src="ipec.jpg" width="70" height="40"
+                        class="h-10 rounded shadow-md border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-500"
+                        alt="IPEC">
+                    <div class="flex flex-col">
+                        <span
+                            class="text-[11px] font-bold tracking-widest uppercase text-gray-300 group-hover:text-white transition-colors">International
+                            Process Excellence Council</span>
+                        <span class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5">Strategic Standards
+                            Partner</span>
+                    </div>
+                </a>
+                <div class="hidden md:block w-px h-10 bg-white/10"></div>
+                <div class="flex items-center gap-4 group">
+                    <img src="logo.jpeg" width="40" height="40"
+                        class="h-10 rounded-full shadow-md border border-white/10" alt="Four Alpha">
+                    <div class="flex flex-col">
+                        <span
+                            class="text-[11px] font-bold tracking-widest uppercase text-gray-300 group-hover:text-gold transition-colors">Four
+                            Alpha AED Lab</span>
+                        <span class="text-[9px] text-gold/40 uppercase tracking-widest mt-0.5">Foundational Framework
+                            Provider</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section: Copyright & Warning -->
+            <div class="flex flex-col items-center gap-3">
+                <div
+                    class="flex flex-col md:flex-row items-center gap-3 md:gap-6 text-[10px] text-gray-400 uppercase tracking-widest font-mono">
+                    <span>&copy; 2026 Four Alpha AED Lab</span> <span class="hidden md:block text-white/5">|</span> <span class="text-[10px] text-gray-500 lowercase tracking-widest">Developed and Architected by <a href="https://mitanshubhasin.netlify.app/" target="_blank" class="text-gold/60 hover:text-gold transition-colors">Mitanshu Bhasin</a></span>
+                    <span class="hidden md:block text-white/5">|</span>
+                    <span>All Rights Reserved</span>
+                    <span class="hidden md:block text-white/5">|</span>
+                    <a href="license.html"
+                        class="text-gold/60 hover:text-gold transition-colors underline decoration-gold/20 hover:decoration-gold underline-offset-4">License
+                        & Usage Restriction</a>
+                </div>
+                <p class="text-[9px] text-red-500/40 tracking-widest uppercase font-semibold text-center mt-2">
+                    Notice: Unauthorized reuse or reproduction of architecture is strictly prohibited.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <div id="assess-modal"
+        class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div
+            class="bg-cosmic-accent border border-white/10 py-8 px-6 md:p-10 rounded-2xl w-full max-w-2xl relative max-h-[90vh] overflow-y-auto">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i
+                    class="fas fa-times text-xl"></i></button>
+            <h2 class="text-2xl font-black uppercase tracking-widest text-gold mb-2">System Diagnostics Input</h2>
+            <p class="text-xs text-gray-400 uppercase mb-8">Update your Alpha scores and initialize new charters.</p>
+            <form id="assess-form" class="space-y-8">
+                <div>
+                    <h3 class="text-sm font-bold border-b border-white/10 pb-2 mb-4 uppercase text-gray-300">Alpha
+                        Scores (Gross / Subtle) [0-100]</h3>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="space-y-2 bg-white/5 p-4 rounded border border-white/5"><label
+                                class="block text-[10px] text-gray-400 font-bold uppercase mb-1 border-b border-white/10 pb-1">&alpha;1
+                                Resource</label>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Gross (G)</label> <input
+                                    type="number" id="input-a1-g" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Subtle (S)</label> <input
+                                    type="number" id="input-a1-s" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                        </div>
+                        <div class="space-y-2 bg-white/5 p-4 rounded border border-white/5"><label
+                                class="block text-[10px] text-gray-400 font-bold uppercase mb-1 border-b border-white/10 pb-1">&alpha;2
+                                Relational</label>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Gross (G)</label> <input
+                                    type="number" id="input-a2-g" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Subtle (S)</label> <input
+                                    type="number" id="input-a2-s" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                        </div>
+                        <div class="space-y-2 bg-white/5 p-4 rounded border border-white/5"><label
+                                class="block text-[10px] text-gray-400 font-bold uppercase mb-1 border-b border-white/10 pb-1">&alpha;3
+                                Ethical</label>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Gross (G)</label> <input
+                                    type="number" id="input-a3-g" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Subtle (S)</label> <input
+                                    type="number" id="input-a3-s" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                        </div>
+                        <div class="space-y-2 bg-white/5 p-4 rounded border border-white/5"><label
+                                class="block text-[10px] text-gray-400 font-bold uppercase mb-1 border-b border-white/10 pb-1">&alpha;4
+                                Mastery</label>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Gross (G)</label> <input
+                                    type="number" id="input-a4-g" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                            <div><label class="block text-[9px] text-gray-400 uppercase mb-1">Subtle (S)</label> <input
+                                    type="number" id="input-a4-s" min="0" max="100"
+                                    class="w-full bg-cosmic-dark/50 border border-white/10 rounded p-1.5 text-xs text-white"
+                                    required></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-bold border-b border-white/10 pb-2 mb-4 uppercase text-gray-300">Add Project
+                        Charter (Optional)</h3>
+                    <div class="space-y-4">
+                        <div><label class="block text-[10px] text-gray-400 uppercase mb-1">Project Name Target</label>
+                            <input type="text" id="input-proj-name"
+                                class="w-full bg-white/5 border border-white/10 rounded p-2 text-white focus:outline-none focus:border-gold"
+                                placeholder="e.g. Diet Optimization">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><label class="block text-[10px] text-gray-400 uppercase mb-1">Belt Level</label>
+                                <select id="input-proj-belt"
+                                    class="w-full bg-cosmic-dark border border-white/10 rounded p-2 text-white focus:outline-none focus:border-gold">
+                                    <option value="White Belt">White Belt</option>
+                                    <option value="Yellow Belt">Yellow Belt</option>
+                                    <option value="Green Belt">Green Belt</option>
+                                    <option value="Black Belt">Black Belt</option>
+                                </select>
+                            </div>
+                            <div><label class="block text-[10px] text-gray-400 uppercase mb-1">Phase</label> <select
+                                    id="input-proj-status"
+                                    class="w-full bg-cosmic-dark border border-white/10 rounded p-2 text-white focus:outline-none focus:border-gold">
+                                    <option value="Define">Define</option>
+                                    <option value="Measure">Measure</option>
+                                    <option value="Analyze">Analyze</option>
+                                    <option value="Improve">Improve</option>
+                                    <option value="Control">Control</option>
+                                    <option value="Completed">Completed</option>
+                                </select></div>
+                        </div>
+                    </div>
+                </div><button type="submit" id="save-assess-btn"
+                    class="w-full bg-gold text-cosmic-dark font-black py-4 rounded-lg tracking-widest hover:bg-white transition-all">SAVE
+                    ASSESSMENT</button>
+            </form>
+        </div>
+    </div>
+    <script src="chatbot.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitanshu Bhasin | Modern SaaS Architect & Lead Developer</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Mitanshu Bhasin is the visionary developer and architect of the Explyra SaaS ecosystem. Specializing in high-performance digital workspaces and enterprise infrastructure.">
+    <meta name="keywords" content="Mitanshu Bhasin, Explyra Developer, SaaS Architect, Four Alpha, Digital Workspace Engineer, Full-Stack Developer Delhi, Mitanshu Explyra">
+    <meta name="author" content="Mitanshu Bhasin">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.fouralpha.org/mitanshu-bhasin.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://www.fouralpha.org/mitanshu-bhasin.html">
+    <meta property="og:title" content="Mitanshu Bhasin | Architect of Explyra">
+    <meta property="og:description" content="Lead developer of the Four Alpha and Explyra ecosystem. Building the future of unified digital workspaces.">
+    <meta property="og:image" content="https://mitanshu.explyra.me/mitanshu.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.fouralpha.org/mitanshu-bhasin.html">
+    <meta property="twitter:title" content="Mitanshu Bhasin | Lead Developer">
+    <meta property="twitter:description" content="Architect of modern SaaS ecosystems and digital productivity suites.">
+    <meta property="twitter:image" content="https://mitanshu.explyra.me/mitanshu.jpg">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mitanshu Bhasin",
+      "url": "https://mitanshu.explyra.me/",
+      "image": "https://i.postimg.cc/Pf9dQZ5M/1772289593451.png",
+      "jobTitle": "Lead Architect & SaaS Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Explyra"
+      },
+      "description": "Lead developer and architect of the Explyra SaaS ecosystem and Four Alpha digital lab.",
+      "sameAs": [
+        "https://github.com/Explyra",
+        "https://www.linkedin.com/in/mitanshu-bhasin/",
+        "https://x.com/explyras"
+      ]
+    }
+    </script>
+
+    <!-- External Resources -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="tailwind-output.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+
+    <style>
+        :root {
+            --cosmic-dark: #0A0F24;
+            --gold: #FFB800;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --border-light: rgba(255, 184, 0, 0.15);
+        }
+
+        body {
+            background-color: var(--cosmic-dark);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .profile-hero {
+            position: relative;
+            padding: 12rem 2rem 6rem;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, rgba(23, 26, 61, 0.8) 0%, rgba(10, 15, 36, 1) 100%);
+        }
+
+        .dev-image-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 3rem;
+        }
+
+        .dev-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 40px rgba(255, 184, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .image-ring {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 1px dashed rgba(255, 184, 0, 0.3);
+            border-radius: 50%;
+            animation: rotate-ring 20s linear infinite;
+        }
+
+        @keyframes rotate-ring {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: 2rem;
+            padding: 3rem;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .tech-pill {
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            transition: 0.3s;
+        }
+
+        .tech-pill:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(255, 184, 0, 0.05);
+        }
+
+        .stat-box {
+            padding: 2rem;
+            border: 1px solid rgba(255, 184, 0, 0.1);
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 0.7rem;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 900;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body class="bg-cosmic-dark">
+
+    <nav class="fixed top-0 w-full z-100 bg-cosmic-dark/80 backdrop-blur-xl border-b border-white/5 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full border-2 border-gold flex items-center justify-center text-gold shadow-[0_0_15px_rgba(255,184,0,0.3)]">
+                    <i class="fas fa-code"></i>
+                </div>
+                <span class="font-black text-xl tracking-widest text-white uppercase">Architect <span class="text-gold">Bhasin</span></span>
+            </a>
+            <div class="hidden md:flex gap-8 text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                <a href="#projects" class="hover:text-gold transition-colors">Projects</a>
+                <a href="https://mitanshu.explyra.me/" class="text-gold border border-gold/20 px-4 py-2 rounded-full hover:bg-gold hover:text-cosmic-dark transition-all">Official Site</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="profile-hero">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="dev-image-container animate-float">
+                <div class="image-ring"></div>
+                <img src="https://i.postimg.cc/Pf9dQZ5M/1772289593451.png" alt="Mitanshu Bhasin" class="dev-image">
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter uppercase mb-2">Mitanshu Bhasin</h1>
+            <p class="text-gold font-black text-sm tracking-[0.4em] uppercase mb-8">Lead Architect • Full-Stack Engineer • Visionary</p>
+            
+            <p class="text-lg md:text-2xl text-white/60 font-serif font-light max-w-3xl mx-auto leading-relaxed mb-12 italic">
+                "Engineer of robust SaaS ecosystems and integrated digital workspaces. Designing the technical foundations of the Explyra and Four Alpha landscapes."
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://github.com/Explyra" target="_blank" class="p-4 bg-white/5 rounded-full hover:text-gold transition-all"><i class="fab fa-github text-xl"></i></a>
+                <a href="https://www.linkedin.com/in/mitanshu-bhasin/" target="_blank" class="p-4 bg-white/5 rounded-full hover:text-gold transition-all"><i class="fab fa-linkedin text-xl"></i></a>
+                <a href="https://x.com/explyras" target="_blank" class="p-4 bg-white/5 rounded-full hover:text-gold transition-all"><i class="fab fa-x-twitter text-xl"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-6 py-24">
+        
+        <div id="projects" class="section-header text-center">
+            <h2>Primary Masterpiece</h2>
+            <div class="w-12 h-1 bg-gold mx-auto mt-4"></div>
+        </div>
+
+        <div class="project-card mb-24">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-4xl font-black uppercase tracking-tight mb-6">Explyra Ecosystem</h3>
+                    <p class="text-gray-400 font-serif text-lg mb-8 leading-relaxed">
+                        Explyra is the flagship SaaS infrastructure developed by Mitanshu Bhasin. It serves as an "All-in-One Digital Workspace," unifying finance, health, ERP, CRM, and developer utilities into a high-performance Progressive Web App (PWA).
+                    </p>
+                    <div class="flex flex-wrap gap-3 mb-10">
+                        <span class="tech-pill">SaaS Design</span>
+                        <span class="tech-pill">PWA</span>
+                        <span class="tech-pill">Cloud Architecture</span>
+                        <span class="tech-pill">AI Integration</span>
+                    </div>
+                    <a href="explyra.html" class="inline-flex items-center gap-3 text-gold font-bold uppercase tracking-[0.2em] text-xs group">
+                        Explore Ecosystem <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                </div>
+                <div class="relative rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
+                    <img src="https://www.fouralpha.org/og-image.png" alt="Explyra Preview" class="w-full h-full object-cover grayscale-0 group-hover:grayscale transition-all duration-500">
+                    <div class="absolute inset-0 bg-gold/10 pointer-events-none"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+            <div class="stat-box">
+                <span class="stat-value">Ecosystem</span>
+                <span class="stat-label">Architect</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value">Full</span>
+                <span class="stat-label">Stack Node </span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value">11+</span>
+                <span class="stat-label">SaaS Modules</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value">AI</span>
+                <span class="stat-label">Focused Dev</span>
+            </div>
+        </div>
+
+        <div class="max-w-3xl mx-auto p-12 bg-white/[0.02] border border-white/5 rounded-3xl text-center">
+            <h4 class="text-gold font-bold text-[10px] tracking-widest uppercase mb-6">Official Reach</h4>
+            <p class="text-2xl font-bold mb-8">support@explyra.me</p>
+            <div class="flex justify-center gap-8">
+                <a href="https://mitanshu.explyra.me/" target="_blank" class="text-xs font-black uppercase tracking-widest text-white/40 hover:text-gold">Portfolio Platform</a>
+                <span class="text-white/10">|</span>
+                <a href="tel:+918076108584" class="text-xs font-black uppercase tracking-widest text-white/40 hover:text-gold">+91 80761 08584</a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="org-footer py-20 border-t border-white/5 bg-black/20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-8 h-8 rounded-full border border-gold/40 flex items-center justify-center text-gold text-[10px]">
+                    <i class="fas fa-code"></i>
+                </div>
+                <span class="font-black text-sm tracking-widest uppercase">Four Alpha / Explyra</span>
+            </div>
+            <p class="text-[9px] text-white/20 uppercase tracking-[0.5em] text-center mb-4">&copy; 2024-2026 Developed by Mitanshu Bhasin. All Rights Reserved.</p>
+            <div class="flex gap-6 text-[8px] font-bold text-white/10 uppercase tracking-widest">
+                <a href="index.html" class="hover:text-white transition-colors">Lab Home</a>
+                <span>/</span>
+                <a href="explyra.html" class="hover:text-white transition-colors">Explyra Directory</a>
+                <span>/</span>
+                <a href="krishna-glass-house.html" class="hover:text-white transition-colors">Interior Hub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.min.js" defer></script>
+</body>
+</html>

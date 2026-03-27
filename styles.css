@@ -1,0 +1,311 @@
+:root {
+    --cosmic-dark: #0A0F24;
+    --cosmic-light: #2B1B4D;
+    --cosmic-accent: #171A3D;
+    --gold: #FFB800
+}
+
+/* Gold Custom Cursor */
+*,
+*::before,
+*::after {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='26' viewBox='0 0 18 26'%3E%3Cpath d='M1 1l12 12H8.5l-2.5 6-1-1 2-5.5H1z' fill='%23FFB800' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E") 1 1, auto;
+}
+
+a,
+button,
+[role="button"],
+input[type="submit"],
+select,
+label[for],
+a *,
+button *,
+[onclick] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='24' viewBox='0 0 20 24'%3E%3Cpath d='M6 1v12l3-3 2.5 5.5 2-1-2.5-5.5H15L6 1z' fill='%23FFB800' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E") 6 1, pointer !important;
+}
+
+.bg-cosmic-dark,
+body.bg-cosmic-dark {
+    background-color: var(--cosmic-dark) !important
+}
+
+.bg-cosmic-accent {
+    background-color: var(--cosmic-accent) !important
+}
+
+.text-gold {
+    color: var(--gold) !important
+}
+
+.cosmic-bg {
+    background: linear-gradient(rgba(10, 15, 36, 0.8), rgba(10, 15, 36, 0.9)), url('assets/cosmic_hero_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+@keyframes cosmicShift {
+    0% { background-position: 0 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0 50% }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) }
+    50% { transform: translateY(-10px) }
+    100% { transform: translateY(0px) }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float 8s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+@media (max-width: 768px) {
+    .cosmic-bg {
+        animation: none !important;
+        background-size: cover !important;
+    }
+}
+
+.glass-box {
+    background: rgba(13, 17, 36, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 184, 0, 0.15);
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(255, 184, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-box:hover {
+    border-color: rgba(255, 184, 0, 0.3);
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        inset 0 0 30px rgba(255, 184, 0, 0.1);
+}
+
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    background-color: #0a0f24;
+    border-top: 1px solid rgba(255, 184, 0, .3);
+    border-bottom: 1px solid rgba(255, 184, 0, .3)
+}
+
+.ticker {
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 100%;
+    animation: tickerScroll 25s linear infinite
+}
+
+.ticker:hover {
+    animation-play-state: paused
+}
+
+@keyframes tickerScroll {
+    0% {
+        transform: translate3d(0, 0, 0)
+    }
+
+    100% {
+        transform: translate3d(-100%, 0, 0)
+    }
+}
+
+.audit-btn:hover {
+    box-shadow: 0 0 20px rgba(255, 184, 0, .4);
+    transform: translateY(-2px);
+    border-color: var(--gold);
+}
+
+.arch-card {
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.arch-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.arch-card:hover .icon-hex {
+    transform: rotate(360deg);
+    background: var(--gold);
+    color: var(--cosmic-dark);
+}
+
+.animate-fade-in {
+    animation: fadeIn .4s ease-out forwards
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+/* Global Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0A0F24;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 184, 0, 0.3);
+    border-radius: 10px;
+    border: 2px solid #0A0F24;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 184, 0, 0.6);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 184, 0, 0.3) #0A0F24;
+}
+
+#mobile-menu {
+    max-height: 100vh;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    will-change: transform;
+    backface-visibility: hidden;
+    z-index: 100;
+    /* Ensure it is above everything */
+    background-color: #0A0F24 !important;
+    /* Solid background */
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.8) !important;
+}
+
+#mobile-menu-backdrop {
+    pointer-events: auto;
+    will-change: opacity;
+    z-index: 90;
+    /* Just below the menu */
+}
+
+/* Optimize blur for mobile performance */
+@media (max-width: 768px) {
+
+    .backdrop-blur-md,
+    .backdrop-blur-sm,
+    .backdrop-blur-xl {
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+    }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .05);
+    border-radius: 10px
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 184, 0, .3);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 184, 0, .1)
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 184, 0, .5)
+}
+
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 184, 0, 0.3) rgba(255, 255, 255, 0.05)
+}
+
+#google_translate_element {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.goog-te-gadget-simple {
+    background-color: rgba(255, 255, 255, .05) !important;
+    border: 1px solid rgba(255, 184, 0, .3) !important;
+    padding: 4px 10px !important;
+    border-radius: 4px !important;
+    font-family: Montserrat, sans-serif !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    transition: all .3s ease !important;
+    display: flex !important;
+    align-items: center !important
+}
+
+.goog-te-gadget-simple:hover {
+    border-color: #ffb800 !important;
+    box-shadow: 0 0 10px rgba(255, 184, 0, .3) !important
+}
+
+.goog-te-gadget-simple img {
+    display: none !important
+}
+
+.goog-te-gadget-simple span {
+    color: #fff !important
+}
+
+.goog-te-menu-value {
+    color: #fff !important;
+    display: flex !important;
+    align-items: center !important
+}
+
+.goog-te-menu-value span:nth-child(5) {
+    display: none !important
+}
+
+.goog-te-menu-value span:nth-child(3) {
+    border-left: 1px solid rgba(255, 184, 0, .3) !important;
+    margin-left: 8px !important;
+    padding-left: 8px !important
+}
+
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+
+.goog-te-menu-frame.skiptranslate {
+    display: block !important;
+    /* Keep the actual dropdown menu visible */
+}
+
+body {
+    top: 0 !important;
+    position: static !important;
+}
+
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.goog-te-menu-frame {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .5) !important;
+    border: 1px solid rgba(255, 184, 0, .2) !important
+}

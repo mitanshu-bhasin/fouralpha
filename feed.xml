@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Four Alpha AED Lab</title>
+  <link>https://www.fouralpha.org/</link>
+  <description>The Four Alpha Model for Human Potential, Lean Six Sigma for Personal Development, and Purushartha Process Excellence.</description>
+  <language>en-us</language>
+  <item>
+    <title>The Four Alpha Model</title>
+    <link>https://www.fouralpha.org/four-alpha-model.html</link>
+    <description>Quantifying the actual trajectory of human evolution.</description>
+  </item>
+  <item>
+    <title>Policy &amp; Governance</title>
+    <link>https://www.fouralpha.org/policy-governance.html</link>
+    <description>Education Trajectories &amp; Planetary Integration through the Behavioral Excellence Framework.</description>
+  </item>
+</channel>
+</rss>

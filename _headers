@@ -1,0 +1,16 @@
+# Define global caching rules for Cloudflare Pages
+
+# Cache all static assets (Images, CSS, JS, etc.) for 1 year
+/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Ensure HTML files are always checked for updates
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Specifically for manifest and service workers, no caching
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/manifest.json
+  Cache-Control: no-cache, no-store, must-revalidate

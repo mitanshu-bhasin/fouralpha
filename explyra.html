@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explyra | The Ultimate All-in-One Digital Workspace & SaaS Ecosystem</title>
+    
+    <!-- High-Authority SEO Meta Tags -->
+    <meta name="description" content="Explyra is a high-performance, unified SaaS ecosystem and PWA designed to modernize workflows for developers and enterprises. Explore our integrated suites for finance, health, learning, and AI utilities.">
+    <meta name="keywords" content="Explyra, Digital Workspace, SaaS Ecosystem, Developer Utilities, Enterprise ERP, CRM, PWA, Productivity Software, Mitanshu Bhasin">
+    <meta name="author" content="Mitanshu Bhasin">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.fouralpha.org/explyra.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.fouralpha.org/explyra.html">
+    <meta property="og:title" content="Explyra | The Ultimate All-in-One Digital Workspace">
+    <meta property="og:description" content="Unify your productivity, management, and developer utilities into a seamless SaaS ecosystem. Designed for peak enterprise performance.">
+    <meta property="og:image" content="https://www.fouralpha.org/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.fouralpha.org/explyra.html">
+    <meta property="twitter:title" content="Explyra | The Ultimate All-in-One Digital Workspace">
+    <meta property="twitter:description" content="Unify your productivity, management, and developer utilities into a seamless SaaS ecosystem. Designed for peak enterprise performance.">
+    <meta property="twitter:image" content="https://www.fouralpha.org/og-image.png">
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Explyra",
+      "operatingSystem": "All",
+      "applicationCategory": "BusinessApplication, DeveloperApplication",
+      "description": "Explyra is a highly robust, unified SaaS ecosystem designed to streamline and modernize workflows for developers, enterprise teams, and individual professionals.",
+      "url": "https://www.fouralpha.org/explyra.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Mitanshu Bhasin",
+        "url": "https://www.fouralpha.org"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Explyra",
+        "logo": "https://www.fouralpha.org/logo.jpeg"
+      }
+    }
+    </script>
+    
+    <!-- External Resources -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="tailwind-output.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+    
+    <style>
+        :root {
+            --cosmic-dark: #0A0F24;
+            --cosmic-accent: #171A3D;
+            --gold: #FFB800;
+            --glass-bg: rgba(23, 26, 61, 0.4);
+            --border-light: rgba(255, 184, 0, 0.15);
+        }
+
+        body {
+            background-color: var(--cosmic-dark);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) var(--cosmic-dark);
+            line-height: 1.6;
+        }
+
+        .promo-hero {
+            position: relative;
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, rgba(23, 26, 61, 1) 0%, rgba(10, 15, 36, 1) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .promo-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+        }
+
+        .hero-subtitle {
+            font-family: 'Merriweather', serif;
+            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 0.75rem;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-header .line {
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin: 0 auto;
+        }
+
+        .ecosystem-container {
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: 2rem;
+            padding: 4rem;
+            margin-bottom: 6rem;
+            overflow: hidden;
+        }
+
+        .ecosystem-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 184, 0, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 184, 0, 0.03);
+            border-color: rgba(255, 184, 0, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 184, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            font-size: 1.25rem;
+            transition: 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--gold);
+            color: var(--cosmic-dark);
+            transform: rotate(360deg);
+        }
+
+        .feature-link {
+            font-family: monospace;
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 2rem;
+            opacity: 0.6;
+        }
+
+        .tech-section {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tag {
+            padding: 0.5rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            transition: 0.3s;
+        }
+
+        .tag:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 184, 0, 0.05);
+        }
+
+        .org-footer {
+            margin-top: 6rem;
+            padding: 4rem;
+            background: var(--glass-bg);
+            border-top: 1px solid var(--border-light);
+            border-radius: 2rem 2rem 0 0;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .ecosystem-container { padding: 2rem; }
+            .org-footer { padding: 2rem; }
+        }
+    </style>
+</head>
+<body class="bg-cosmic-dark">
+
+    <nav class="fixed top-0 w-full z-100 bg-cosmic-dark/80 backdrop-blur-xl border-b border-white/5 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full border-2 border-gold flex items-center justify-center text-gold shadow-[0_0_15px_rgba(255,184,0,0.3)]">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <span class="font-black text-xl tracking-widest text-white uppercase">Four <span class="text-gold">Alpha</span></span>
+            </a>
+            <a href="index.html" class="group flex items-center gap-2 text-[10px] font-black text-gold uppercase tracking-[0.3em]">
+                <span class="opacity-40 group-hover:opacity-100 transition-opacity">Return to Lab</span>
+                <i class="fas fa-arrow-right text-[8px]"></i>
+            </a>
+        </div>
+    </nav>
+
+    <header class="promo-hero">
+        <div class="animate-float">
+            <h1 class="hero-title">EXPLYRA</h1>
+        </div>
+        <p class="hero-subtitle">The multi-dimensional SaaS ecosystem engineered for peak productivity across the developer and enterprise landscape.</p>
+        
+        <div class="flex items-center gap-6 mt-4">
+            <a href="https://explyra.me" target="_blank" class="bg-gold text-cosmic-dark px-10 py-4 rounded-full font-black text-xs uppercase tracking-widest hover:bg-white transition-all shadow-[0_15px_30px_rgba(255,184,0,0.3)]">Explora.me</a>
+            <div class="flex gap-3 text-[10px] font-bold text-white/30 uppercase tracking-widest">
+                <span>Cloudflare</span>
+                <span>/</span>
+                <span>Netlify</span>
+                <span>/</span>
+                <span>Vercel</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6">
+        
+        <section class="ecosystem-container">
+            <div class="max-w-3xl mb-12">
+                <h2 class="text-gold font-black text-sm tracking-[0.5em] uppercase mb-4">The Unified Ecosystem</h2>
+                <p class="text-2xl md:text-3xl font-light leading-snug text-white/80 font-serif">
+                    Explyra is a robust, unified SaaS infrastructure designed to eliminate friction in modern workflows. By merging <strong>Developer Utilities</strong>, <strong>Enterprise Management</strong>, and <strong>Productivity Hubs</strong>, it provides a seamless Digital Workspace tailored for professionals.
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <!-- 1 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-wallet"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Expense Intelligence</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Advanced financial tracking for teams. Dual-portal audit environment with biometric verification and real-time data visualizers.</p>
+                    </div>
+                    <div class="feature-link">CORE_MODULES / FINANCIAL / ADMIN / EMP</div>
+                </div>
+
+                <!-- 2 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Developer Utilities</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Integrated AI voice translation, P2P encrypted file sharing, and high-fidelity document virtualization via DocScan.</p>
+                    </div>
+                    <div class="feature-link">ROOT / UTILITIES / DEV_SUITE</div>
+                </div>
+
+                <!-- 3 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Modular Learning</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Intelligent LMS with interactive dashboards and automated certification engines for corporate upskilling.</p>
+                    </div>
+                    <div class="feature-link">ACADEMY / EXPLYRA_LEARNING</div>
+                </div>
+
+                <!-- 4 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">INO Billing</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Professional-grade financial document generation. High-customization billing suite for global enterprises.</p>
+                    </div>
+                    <div class="feature-link">SOFT / INO_INVOICING</div>
+                </div>
+
+                <!-- 5 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Health Dynamics</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Holistic metabolic and fitness telemetry with native PWA offline capability and AI behavioral companion.</p>
+                    </div>
+                    <div class="feature-link">BIOMETRIC / HEALTH_MANAGER</div>
+                </div>
+
+                <!-- 6 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-industry"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">ERP Systems</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Comprehensive supply chain orchestration and manufacturing resource planning for large-scale operations.</p>
+                    </div>
+                    <div class="feature-link">INFRA / MANUFACTURING_ERP</div>
+                </div>
+
+                <!-- 7 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">CRM Foundations</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Sales pipeline orchestration tools designed for high-velocity organizations and scaling enterprise management.</p>
+                    </div>
+                    <div class="feature-link">CORE_MODULES / SALES / CRM</div>
+                </div>
+
+                <!-- 8 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-id-badge"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Geofenced Attendance</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Precision check-in infrastructure utilizing geofencing for HR security and workforce coordination.</p>
+                    </div>
+                    <div class="feature-link">SECURITY / ATTENDANCE</div>
+                </div>
+
+                <!-- 9 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Booking Hub</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Automated service scheduling system with direct client synchronization and resource optimization.</p>
+                    </div>
+                    <div class="feature-link">LINK / BOOK.EXPLYRA.ME</div>
+                </div>
+
+                <!-- 10 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-server"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">Edge Infrastructure</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Global DNS management and edge computing tools built on ultra-low latency serverless architecture.</p>
+                    </div>
+                    <div class="feature-link">NODE / DNS_MANAGER</div>
+                </div>
+
+                <!-- 11 -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="text-xl font-bold uppercase tracking-wide mb-3">AI Comm Suite</h3>
+                        <p class="text-sm text-gray-400 font-serif leading-relaxed">Zero-spam ecosystem chat with an integrated AI support agent for real-time policy and workflow navigation.</p>
+                    </div>
+                    <div class="feature-link">COMMS / AI_ASSISTANT</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tech-section">
+            <div class="section-header">
+                <h2>The Stack</h2>
+                <div class="line"></div>
+            </div>
+            <div class="tech-tags">
+                <span class="tag">HTML5</span>
+                <span class="tag">ES6+ JavaScript</span>
+                <span class="tag">Tailwind Standard</span>
+                <span class="tag">Firebase Engine</span>
+                <span class="tag">Cloud Functions</span>
+                <span class="tag">Capacitor Native</span>
+                <span class="tag">Python</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Wrangler</span>
+                <span class="tag">Chart.js</span>
+                <span class="tag">Google AI</span>
+                <span class="tag">PWA Core</span>
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-10 border border-white/5 bg-white/[0.01] rounded-2xl">
+                    <h4 class="text-gold font-bold text-[10px] tracking-widest uppercase mb-6">Leadership</h4>
+                    <p class="text-xl font-bold">Mitanshu Bhasin</p>
+                    <p class="text-xs text-white/40 mt-1 uppercase tracking-widest">Architect & Core Maintainer</p>
+                </div>
+                <div class="p-10 border border-white/5 bg-white/[0.01] rounded-2xl">
+                    <h4 class="text-gold font-bold text-[10px] tracking-widest uppercase mb-6">Contact</h4>
+                    <p class="text-xl font-bold">support@explyra.me</p>
+                    <p class="text-xs text-white/40 mt-1 uppercase tracking-widest">+91-8076108584</p>
+                </div>
+                <div class="p-10 border border-white/5 bg-white/[0.01] rounded-2xl">
+                    <h4 class="text-gold font-bold text-[10px] tracking-widest uppercase mb-6">Timeline</h4>
+                    <p class="text-xl font-bold">Est. 2024</p>
+                    <p class="text-xs text-white/40 mt-1 uppercase tracking-widest">Ongoing Evolution</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="org-footer">
+        <div class="max-w-7xl mx-auto">
+            <div class="social-icons">
+                <a href="https://github.com/Explyra" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://x.com/explyras" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/explyra/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://instagram.com/explyras" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@explyras" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-[9px] text-white/20 uppercase tracking-[0.5em] mb-4">Proprietary Assets &copy; 2024-2026 Explyra ecosystem</p>
+                <p class="text-xs text-white/40 max-w-xl mx-auto leading-relaxed">Strictly disallowed for direct commercial utilization or raw cloning without authorized documentation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.min.js" defer></script>
+</body>
+</html>
